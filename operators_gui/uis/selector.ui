@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>310</width>
+    <height>245</height>
+   </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::WheelFocus</enum>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QWidget{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QLineEdit{
+	background-color:#ffffff;
+	color:#3a3b3a;
+	border-color:#ffffff;
+	border-style:solid;;
+	border-width:2px;
+	height:25px;
+	font:bold
+}
+QLineEdit::focus{
+	border-style:solid;
+	border-width:2px;
+	border-color:#54b0cb;
+}
+QTableView{
+	background-color:#ffffff;
+	alternate-background-color:#e2e2e2;
+	color:#3a3b3a;
+	border-style:solid;
+	border-color:#ffffff;
+	border-width:0px;
+	selection-color:#ffffff;
+	selection-background-color:#54b0cb;
+}
+QHeaderView::section{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:40px;
+	border: #ffffff;
+	border-style:solid;
+	border-width:0px;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QLineEdit" name="searchEdit">
+     <property name="placeholderText">
+      <string>Введите значение для поиска</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QTableView" name="refTable">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>false</bool>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::NoPen</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderHighlightSections">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+  </layout>
+  <action name="driverSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../.designer/res/edit.png</normaloff>../../../.designer/res/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Правка</string>
+   </property>
+   <property name="toolTip">
+    <string>Изменить водителя</string>
+   </property>
+  </action>
+  <action name="unloadSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../.designer/res/edit.png</normaloff>../../../.designer/res/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выбрать пункт выгрузки</string>
+   </property>
+   <property name="toolTip">
+    <string>Выбрать пункт выгрузки</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
