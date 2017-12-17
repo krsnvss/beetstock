@@ -7,7 +7,8 @@ from PyQt5 import QtGui, QtWidgets, uic
 
 from operators_gui.sql.sql_queries import *
 from operators_gui.sql.table_models import *
-from operators_gui.var.labels import *
+from operators_gui.misc.labels import *
+from operators_gui.misc.checkers import *
 
 
 class OperatorApp(QtWidgets.QWidget):
@@ -41,7 +42,9 @@ class OperatorApp(QtWidgets.QWidget):
         # Получить данные о рейсе
         self.selected_id = [self.window.mainTable.model().data(index)
                             for index in self.window.mainTable.selectedIndexes()][0]
+        print(self.selected_id)
         self.trip_data = get_data(self.selected_id)
+        print(self.trip_data)
         if self.window.tableSelector.currentIndex() == 1:
             # Открыть форму вызова из очереди
             self.callForm = uic.loadUi("./uis/line_call.ui")
@@ -69,6 +72,8 @@ class OperatorApp(QtWidgets.QWidget):
             self.callForm.show()
         elif self.window.tableSelector.currentIndex() == 2 or \
                 self.window.tableSelector.currentIndex() == 3:
+            # Переменная нужна. чтобы отличить существующий рейс от нового
+            self.record_id = 1
             # Открыть форму редактирования рейса
             self.editForm = uic.loadUi("./uis/trip_edit.ui")
             self.editForm.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
@@ -84,8 +89,8 @@ class OperatorApp(QtWidgets.QWidget):
             # Список выгрузок
             self.unloads = get_unloads()
             self.editForm.unloadsList.addItems([item for item in self.unloads])
-            if self.trip_data[6] is not None:
-                self.current_unload = self.trip_data[6]
+            if self.trip_data[9] is not None:
+                self.current_unload = self.trip_data[9]
                 self.editForm.unloadsList.setCurrentIndex(self.unloads[self.trip_data[9]] - 1)
             # Подключить действия к кнопкам
             self.editForm.cancelBtn.clicked.connect(
@@ -293,16 +298,24 @@ class OperatorApp(QtWidgets.QWidget):
 
     # Сохранить новую карту
     def save_card(self):
-        self.rfid = self.rfidInput.rfid.text()
-        self.rfidInput.close()
-        self.driver = self.cardForm.driverEdit.text()
-        self.transport = get_transport(self.cardForm.truckEdit.text())
-        self.supplier = get_supplier(self.cardForm.supEdit.text())
-        self.insert = insert_driver(self.driver,
-                                    self.transport,
-                                    self.supplier,
-                                    self.rfid)
-        self.cardForm.close()
+        self.driver = name_checker(self.cardForm.driverEdit.text())
+        try:
+            self.rfid = self.rfidInput.rfid.text()
+            self.rfidInput.close()
+            self.transport = get_transport(self.cardForm.truckEdit.text())
+            self.supplier = get_supplier(self.cardForm.supEdit.text())
+            self.insert = insert_driver(self.driver,
+                                        self.transport,
+                                        self.supplier,
+                                        self.rfid)
+            self.cardForm.close()
+        except:
+            self.name_check_error = QtWidgets.QMessageBox()
+            self.name_check_error.setWindowTitle("Что-то не так")
+            self.name_check_error.setText(wrong_data)
+            self.name_check_error.setIcon(2)
+            self.rfidInput.close()
+            self.name_check_error.show()
 
     # Начать новый рейс
     def edit_new_trip(self):

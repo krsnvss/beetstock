@@ -46,7 +46,35 @@ WHERE
     while(_query.next()):
         for index in range(0, 18):
             _data.append(_query.value(index))
-    return _data
+    if len(_data) > 0:
+        return _data
+    elif len(_data) == 0:
+        _query = QSqlQuery('''
+            SELECT 
+    trips.id AS tripid,
+    trips.trip AS tripnumber,
+    drivers.name AS drivername,
+    transport.plate AS transportplate,
+    transport.trailer AS transporttrailer,
+    suppliers.full_name AS suppliername,
+    loadpoints.name AS loadpointname
+FROM
+    trips,
+    drivers,
+    transport,
+    suppliers,
+    loadpoints
+WHERE
+    drivers.id = trips.driver
+        AND transport.id = trips.transport
+        AND suppliers.id = trips.supplier
+        AND loadpoints.id = trips.loadpoint
+        AND trips.id = {}'''.format(record_id))
+        _data = []
+        while (_query.next()):
+            for index in range(0, 18):
+                _data.append(_query.value(index))
+        return _data
 
 
 # Список выгрузок для выпадающего списка
