@@ -2,7 +2,7 @@
 # SQL запросы используемые в интерфейсе оператора
 from PyQt5.QtSql import QSqlQuery
 # import to test query, remove it in release
-# from operators_gui.sql.table_models import *
+# from table_models import *
 
 # Данные о рейсе для форм редактирования
 def get_data(record_id):
@@ -153,7 +153,11 @@ def get_driver(driver_id_or_name):
         drivers.name,
         transport.plate,
         transport.trailer,
-        suppliers.name
+        suppliers.name,
+        drivers.phone,
+        drivers.email,
+        drivers.comment,
+        drivers.photo
     FROM
         drivers,
         transport,
@@ -169,6 +173,10 @@ def get_driver(driver_id_or_name):
             _data.append(_query.value(1))
             _data.append(_query.value(2))
             _data.append(_query.value(3))
+            _data.append(_query.value(4))
+            _data.append(_query.value(5))
+            _data.append(_query.value(6))
+            _data.append(_query.value(7))
     return _data
 
 # Пункт погрузки
@@ -192,10 +200,26 @@ def rfid_to_driver(rfid):
     else:
         return False
 
+
 # Поставщик
 def get_supplier(name):
     _query = QSqlQuery("SELECT id FROM suppliers WHERE full_name = '{}'"
                        .format(name))
+    _data = []
+    while (_query.next()):
+        _data.append(_query.value(0))
+    if len(_data) == 0:
+        _query = QSqlQuery("SELECT id FROM suppliers WHERE name = '{}'"
+                           .format(name))
+        _data = []
+        while (_query.next()):
+            _data.append(_query.value(0))
+    return _data[0]
+
+
+def get_supplier_name(id):
+    _query = QSqlQuery("SELECT name FROM suppliers WHERE id = '{}'"
+                       .format(id))
     _data = []
     while (_query.next()):
         _data.append(_query.value(0))
@@ -209,6 +233,7 @@ def get_transport(name):
     while (_query.next()):
         _data.append(_query.value(0))
     return _data[0]
+
 
 # Добавить водителя
 def insert_driver(name, transport, employer, rfid):

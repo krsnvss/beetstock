@@ -5,19 +5,22 @@ import sys
 
 from PyQt5 import QtGui, QtWidgets, uic
 
-from operators_gui.sql.sql_queries import *
-from operators_gui.sql.table_models import *
-from operators_gui.misc.labels import *
-from operators_gui.misc.checkers import *
+from sql.sql_queries import *
+from sql.table_models import *
+from misc.labels import *
+from misc.checkers import *
+from misc.dates import *
+from misc.parameters import *
 
 
 class OperatorApp(QtWidgets.QWidget):
 
     def __init__(self):
         super(OperatorApp, self).__init__()
+        # автоматическое обновление таблиц. Настройка интервала в misc.parameters
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.table_update)
-        self.timer.setInterval(15000)
+        self.timer.setInterval(table_update)
         self.timer.start()
         self.gui()
 
@@ -26,6 +29,7 @@ class OperatorApp(QtWidgets.QWidget):
         # Действие по двойному клику по таблице
         self.window.mainTable.doubleClicked.connect(self.table_double_click)
         # Действие по смене значения в выпадающем меню
+        self.table_change(0)
         self.window.tableSelector.currentIndexChanged.connect(
             lambda: self.table_change(self.window.tableSelector.currentIndex())
         )
@@ -33,8 +37,13 @@ class OperatorApp(QtWidgets.QWidget):
         self.window.actionExit.triggered.connect(QtWidgets.QApplication.quit)
         self.window.addCard.triggered.connect(self.add_new_card)
         self.window.addTrip.triggered.connect(self.edit_new_trip)
-        # При открытии окна, оно будет развернуто нв всю доступную область
-        self.window.setGeometry(QtWidgets.QDesktopWidget().availableGeometry())
+        # Установка текущей даты в поле выбора
+        self.window.dateEdit.setDate(QtCore.QDate.currentDate())
+        self.window.dateEdit.setVisible(False)
+        self.window.dateEdit.dateChanged.connect(lambda: self.table_change(3))
+        # При открытии окна, оно будет развернуто на всю доступную область
+        #self.window.setGeometry(QtWidgets.QDesktopWidget().availableGeometry())
+        self.center(self.window)
         self.window.show()
 
     # Двойной клик по таблице
@@ -42,9 +51,7 @@ class OperatorApp(QtWidgets.QWidget):
         # Получить данные о рейсе
         self.selected_id = [self.window.mainTable.model().data(index)
                             for index in self.window.mainTable.selectedIndexes()][0]
-        print(self.selected_id)
         self.trip_data = get_data(self.selected_id)
-        print(self.trip_data)
         if self.window.tableSelector.currentIndex() == 1:
             # Открыть форму вызова из очереди
             self.callForm = uic.loadUi("./uis/line_call.ui")
@@ -59,9 +66,9 @@ class OperatorApp(QtWidgets.QWidget):
             self.unloads = get_unloads()
             self.callForm.unloadsList.addItems([item for item in self.unloads])
             # Если выгрузка уже назначена, установим назначенное значение
-            if self.trip_data[6] is not None:
-                self.current_unload = self.trip_data[6]
-                self.callForm.unloadsList.setCurrentIndex(self.unloads[self.trip_data[9]] - 1)
+            # if self.trip_data[6] is not None:
+                # self.current_unload = self.trip_data[6]
+                # self.callForm.unloadsList.setCurrentIndex(self.unloads[self.trip_data[9]] - 1)
             # Подключить действие к кнопкам
             self.callForm.saveBtn.clicked.connect(self.line_call)
             self.callForm.cancelBtn.clicked.connect(
@@ -125,27 +132,33 @@ class OperatorApp(QtWidgets.QWidget):
     def table_change(self, _int):
         if _int == 0:
             self.show_all_columns()
-            tripsModel.setFilter("arrival_dt is null")
-            self.enroute_hidden_columns = [1, 2, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+            self.window.mainTable.setModel(enrouteModel)
+            self.enroute_hidden_columns = [1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
             self.hide_columns(self.enroute_hidden_columns)
+            self.window.dateEdit.setVisible(False)
         elif _int == 1:
             self.show_all_columns()
-            tripsModel.setFilter("arrival_dt is not null and unload_send is null")
-            self.inline_hidden_columns = [1, 2, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+            self.window.mainTable.setModel(inlineModel)
+            self.inline_hidden_columns = [1, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
             self.hide_columns(self.inline_hidden_columns)
+            self.window.dateEdit.setVisible(False)
         elif _int == 2:
             self.show_all_columns()
             self.window.mainTable.setModel(incompleteModel)
-            incompleteModel.setFilter("unload_send is not null and tare_weight is null")
             self.incomplete_hidden_columns = [5, 6, 8, 10, 12, 15, 16, 17, 18, 19, 20, 21]
             self.hide_columns(self.incomplete_hidden_columns)
+            self.window.dateEdit.setVisible(False)
         elif _int == 3:
             self.show_all_columns()
             self.window.mainTable.setModel(tripsModel)
-            tripsModel.setFilter("tare_weight is not null")
+            self.shift = day_shift(self.window.dateEdit.date().toPyDate())
+            tripsModel.setFilter("tare_weight is not null and tare_dt between '{}' and '{}'".
+                                 format(self.shift[0],
+                                        self.shift[1]))
             self.complete_hidden_columns = [8, 10, 15, 18, 20, 21]
             self.hide_columns(self.complete_hidden_columns)
-        self.window.mainTable.setColumnWidth(0, 2)
+            self.window.dateEdit.setVisible(True)
+        self.window.mainTable.setColumnWidth(0, 50)
         self.window.mainTable.resizeRowsToContents()
 
     # Сохранение рейса после редактирования
@@ -298,8 +311,8 @@ class OperatorApp(QtWidgets.QWidget):
 
     # Сохранить новую карту
     def save_card(self):
-        self.driver = name_checker(self.cardForm.driverEdit.text())
         try:
+            self.driver = name_checker(self.cardForm.driverEdit.text())
             self.rfid = self.rfidInput.rfid.text()
             self.rfidInput.close()
             self.transport = get_transport(self.cardForm.truckEdit.text())
@@ -309,9 +322,16 @@ class OperatorApp(QtWidgets.QWidget):
                                         self.supplier,
                                         self.rfid)
             self.cardForm.close()
-        except:
+        except ValueError:
             self.name_check_error = QtWidgets.QMessageBox()
-            self.name_check_error.setWindowTitle("Что-то не так")
+            self.name_check_error.setWindowTitle("Что-то не так!")
+            self.name_check_error.setText(wrong_data)
+            self.name_check_error.setIcon(2)
+            self.rfidInput.close()
+            self.name_check_error.show()
+        except IndexError:
+            self.name_check_error = QtWidgets.QMessageBox()
+            self.name_check_error.setWindowTitle("Что-то не так!")
             self.name_check_error.setText(wrong_data)
             self.name_check_error.setIcon(2)
             self.rfidInput.close()
@@ -351,7 +371,8 @@ class OperatorApp(QtWidgets.QWidget):
         self.truckSelect.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
         self.center(self.truckSelect)
         self.truckSelect.refTable.setModel(trucksModel)
-        self.truckSelect.searchEdit.textChanged.connect(lambda: self.set_filter(trucksModel))
+        self.truckSelect.searchEdit.textChanged.connect(
+            lambda: self.set_filter(trucksModel))
         self.truckSelect.refTable.setColumnHidden(1, True)
         self.truckSelect.refTable.setColumnHidden(4, True)
         self.truckSelect.refTable.setColumnHidden(5, True)
@@ -369,7 +390,8 @@ class OperatorApp(QtWidgets.QWidget):
         self.supplierSelect.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
         self.center(self.supplierSelect)
         self.supplierSelect.refTable.setModel(suppliersModel)
-        self.supplierSelect.searchEdit.textChanged.connect(lambda: self.set_filter(suppliersModel))
+        self.supplierSelect.searchEdit.textChanged.connect(
+            lambda: self.set_filter(suppliersModel))
         self.supplierSelect.refTable.setColumnHidden(1, True)
         self.supplierSelect.refTable.setColumnHidden(4, True)
         self.supplierSelect.refTable.setColumnHidden(5, True)

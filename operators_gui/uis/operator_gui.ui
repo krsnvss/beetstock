@@ -63,12 +63,12 @@ QComboBox::drop-down {
    border: 2px;
 }
 QComboBox::down-arrow {
-    image: url(&quot;/home/krsnvss/beetcount/operators_gui/res/if_chevron-left.png&quot;);
+    image: url(&quot;./res/if_chevron-left.png&quot;);
     width: 16px;
     height: 16px;
 }
 QComboBox::down-arrow::hover {
-    image: url(&quot;/home/krsnvss/beetcount/operators_gui/res/if_chevron-down.png&quot;);
+    image: url(&quot;./res/if_chevron-down.png&quot;);
     width: 16px;
     height: 16px;
 }
@@ -92,12 +92,12 @@ QDateEdit::drop-down {
    border: 2px;
 }
 QDateEdit::down-arrow {
-    image: url(&quot;/home/krsnvss/beetcount/operators_gui/res/if_chevron-left.png&quot;);
+    image: url(&quot;./res/if_chevron-left.png&quot;);
     width: 16px;
     height: 16px;
 }
 QDateEdit::down-arrow::hover {
-    image: url(&quot;/home/krsnvss/beetcount/operators_gui/res/if_chevron-down.png&quot;);
+    image: url(&quot;./res/if_chevron-down.png&quot;);
     width: 16px;
     height: 16px;
 }

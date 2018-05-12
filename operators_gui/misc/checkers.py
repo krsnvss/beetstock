@@ -15,4 +15,4 @@ def name_checker(name):
     if match(correct_regexp, correct_name) is not None:
         return correct_name.strip()
     else:
-        return None
+        raise ValueError

@@ -5,9 +5,9 @@ from PyQt5 import QtCore
 # Подключение к базе данных и модели таблиц
 
 # База данных
-db_name = 'beetcount'
+db_name = 'beetstock'
 db_user = 'root'
-db_password = ''
+db_password = 'Root123456'
 db_host = 'localhost'
 
 # Подключение к базе данных
@@ -93,6 +93,41 @@ incompleteModel.setHeaderData(21, QtCore.Qt.Horizontal, "Зачет")
 incompleteModel.setFilter("unload_send is not null and tare_weight is null")
 incompleteModel.select()
 
+# Модель таблицы "В очереди"
+inlineModel = QSqlRelationalTableModel()
+inlineModel.setTable("trips")
+inlineModel.setEditStrategy(QSqlRelationalTableModel.OnManualSubmit)
+# Добавляем связи для отображения имен вместо идентификаторов
+inlineModel.setRelation(2, QSqlRelation('drivers', 'id', 'name'))
+inlineModel.setRelation(3, QSqlRelation('transport', 'id', 'plate'))
+inlineModel.setRelation(4, QSqlRelation('suppliers', 'id', 'name'))
+inlineModel.setRelation(5, QSqlRelation('loadpoints', 'id', 'name'))
+inlineModel.setHeaderData(0, QtCore.Qt.Horizontal, "ID")
+inlineModel.setHeaderData(2, QtCore.Qt.Horizontal, "Водитель")
+inlineModel.setHeaderData(3, QtCore.Qt.Horizontal, "Транспорт")
+inlineModel.setHeaderData(4, QtCore.Qt.Horizontal, "Поставщик")
+inlineModel.setHeaderData(7, QtCore.Qt.Horizontal, "Прибыл")
+inlineModel.setFilter("arrival_dt is not null and unload_send is null")
+inlineModel.select()
+
+# Модель таблицы "В пути"
+enrouteModel = QSqlRelationalTableModel()
+enrouteModel.setTable("trips")
+enrouteModel.setEditStrategy(QSqlRelationalTableModel.OnManualSubmit)
+# Добавляем связи для отображения имен вместо идентификаторов
+enrouteModel.setRelation(2, QSqlRelation('drivers', 'id', 'name'))
+enrouteModel.setRelation(3, QSqlRelation('transport', 'id', 'plate'))
+enrouteModel.setRelation(4, QSqlRelation('suppliers', 'id', 'name'))
+enrouteModel.setRelation(5, QSqlRelation('loadpoints', 'id', 'name'))
+enrouteModel.setHeaderData(0, QtCore.Qt.Horizontal, "ID")
+enrouteModel.setHeaderData(2, QtCore.Qt.Horizontal, "Водитель")
+enrouteModel.setHeaderData(3, QtCore.Qt.Horizontal, "Транспорт")
+enrouteModel.setHeaderData(4, QtCore.Qt.Horizontal, "Поставщик")
+enrouteModel.setHeaderData(5, QtCore.Qt.Horizontal, "Поле")
+enrouteModel.setHeaderData(6, QtCore.Qt.Horizontal, "Загружен")
+enrouteModel.setFilter("arrival_dt is null")
+enrouteModel.select()
+
 # # Делаем копию модели для применения в таблице "В пути"
 # enrouteModel = tripsModel
 # enrouteModel.setFilter("arrival_dt is null")
@@ -118,6 +153,8 @@ unloadsModel.select()
 driversModel = QSqlRelationalTableModel()
 driversModel.setTable("drivers")
 driversModel.setEditStrategy(QSqlTableModel.OnManualSubmit)
+driversModel.setRelation(6, QSqlRelation('transport', 'id', 'plate'))
+driversModel.setRelation(7, QSqlRelation('suppliers', 'id', 'full_name'))
 driversModel.setSort(0, QtCore.Qt.AscendingOrder)
 driversModel.setHeaderData(0, QtCore.Qt.Horizontal, "ID")
 driversModel.setHeaderData(1, QtCore.Qt.Horizontal, "Выгрузка")
