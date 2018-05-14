@@ -7,7 +7,7 @@ datafile = "plot_data_counts.txt"
 set terminal png font arial 10 size 1250,205
 
 
-set output "plot_count.png"
+set output "./res/plot_count.png"
 set grid x y
 set xtics 1
 #set xlabel "Часы смены"
@@ -22,7 +22,7 @@ gnuplot << EOP
 datafile = "plot_data_counts.txt"
 
 set terminal png font arial 10 size 1250,205
-set output "plot_sum.png"
+set output "./res/plot_sum.png"
 set grid x y
 #set xlabel "Часы смены"
 #set ylabel "Тонны"

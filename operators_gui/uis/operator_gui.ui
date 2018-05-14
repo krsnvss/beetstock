@@ -538,7 +538,7 @@ QTabBar::tab:right:!selected{
            <enum>QTabWidget::West</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -546,12 +546,12 @@ QTabBar::tab:right:!selected{
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="tripChartLabel">
               <property name="text">
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>../plot_count.png</pixmap>
+               <pixmap>../res/plot_count.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -566,12 +566,12 @@ QTabBar::tab:right:!selected{
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="tonnChartLabel">
               <property name="text">
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>../plot_sum.png</pixmap>
+               <pixmap>../res/plot_sum.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>

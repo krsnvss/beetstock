@@ -5,12 +5,13 @@ import sys
 
 from PyQt5 import QtGui, QtWidgets, uic
 
-from sql.sql_queries import *
-from sql.table_models import *
-from misc.labels import *
-from misc.checkers import *
-from misc.dates import *
-from misc.parameters import *
+from operators_gui.sql.sql_queries import *
+from operators_gui.sql.table_models import *
+from operators_gui.misc.labels import *
+from operators_gui.misc.checkers import *
+from operators_gui.misc.dates import *
+from operators_gui.misc.parameters import *
+from operators_gui.plotter import Plotter
 
 
 class OperatorApp(QtWidgets.QWidget):
@@ -22,6 +23,7 @@ class OperatorApp(QtWidgets.QWidget):
         self.timer.timeout.connect(self.table_update)
         self.timer.setInterval(table_update)
         self.timer.start()
+        self.plotter = Plotter(self)
         self.gui()
 
     def gui(self):
@@ -206,10 +208,13 @@ class OperatorApp(QtWidgets.QWidget):
         self.widget_size.moveCenter(self.display_center)
         _widget.move(self.widget_size.topLeft())
 
-    # Обновить таблицу
+    # Обновить таблицу и графики
     def table_update(self):
         if self.window.mainTable.model() is not None:
             self.window.mainTable.model().select()
+        self.plotter.start()
+        self.window.tripChartLabel.setPixmap(QtGui.QPixmap("./res/plot_count.png"))
+        self.window.tonnChartLabel.setPixmap(QtGui.QPixmap("./res/plot_sum.png"))
 
     # Прочитать карту водителя
     def read_rfid(self, _action):

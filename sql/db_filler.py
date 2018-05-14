@@ -3,6 +3,7 @@ from operators_gui.sql.table_models import *
 from operators_gui.sql.sql_queries import *
 from datetime import datetime, timedelta
 from random import choice, randint, uniform
+from time import sleep
 
 def random_dt():
     year = datetime.now().year
@@ -108,5 +109,6 @@ def fill_with_inline():
 c = 0
 for x in range(100):
     fill_with_completed()
+    sleep(5)
     c += 1
     print(c, " records inserted", end='\r')
