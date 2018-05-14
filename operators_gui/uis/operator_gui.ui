@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
+    <width>1298</width>
     <height>800</height>
    </rect>
   </property>
@@ -137,7 +137,31 @@ QMenu::item::selected{
 	color:#ffffff;
 	padding-left:10px;
 }
-</string>
+QTabWidget{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTabBar::tab:right:selected{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QTabBar::tab:right:!selected{
+    background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -200,19 +224,6 @@ QMenu::item::selected{
           </property>
          </spacer>
         </item>
-        <item row="20" column="5">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="1" column="6">
          <spacer name="verticalSpacer_4">
           <property name="orientation">
@@ -235,19 +246,6 @@ QMenu::item::selected{
            <size>
             <width>20</width>
             <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="20" column="4">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
            </size>
           </property>
          </spacer>
@@ -330,19 +328,6 @@ QMenu::item::selected{
           </property>
          </spacer>
         </item>
-        <item row="20" column="1">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="10" column="6">
          <spacer name="verticalSpacer_19">
           <property name="orientation">
@@ -408,19 +393,6 @@ QMenu::item::selected{
           </property>
          </spacer>
         </item>
-        <item row="20" column="2">
-         <spacer name="horizontalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="12" column="6">
          <spacer name="verticalSpacer_16">
           <property name="orientation">
@@ -430,19 +402,6 @@ QMenu::item::selected{
            <size>
             <width>20</width>
             <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="20" column="3">
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
            </size>
           </property>
          </spacer>
@@ -572,6 +531,121 @@ QMenu::item::selected{
            </date>
           </property>
          </widget>
+        </item>
+        <item row="16" column="1" rowspan="4" colspan="5">
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="tabPosition">
+           <enum>QTabWidget::West</enum>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Рейсы</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../plot_count.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Тонны</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../plot_sum.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item row="20" column="5">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="20" column="4">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="20" column="3">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="20" column="2">
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="20" column="1">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -825,7 +899,7 @@ QMenu::item::selected{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1280</width>
+     <width>1298</width>
      <height>30</height>
     </rect>
    </property>
