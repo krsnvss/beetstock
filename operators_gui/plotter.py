@@ -12,11 +12,11 @@ class Plotter(QThread):
 
     # Create text files for gnuplot
     def run(self):
-        self.shift = day_shift(datetime.now())
+        self.shift = shift_time(datetime.now())
         self.sums = []
         self.counts = []
         self.start_dt = self.shift[0]
-        for _hour in range(1, 25):
+        for step in range(96):
             _query = QSqlQuery('''
             SELECT 
             COUNT(*) AS sup, SUM(net_weight)
@@ -25,12 +25,12 @@ class Plotter(QThread):
         WHERE
             tare_dt BETWEEN '{}' AND '{}'
             '''.format(self.start_dt,
-                       self.start_dt + timedelta(seconds=3600)))
+                       self.start_dt + timedelta(seconds=900)))
             while (_query.next()):
-                self.counts.append("{} {} {}\n".format(_hour,
+                self.counts.append("{} {} {}\n".format(self.start_dt.strftime("%d.%m/%H:%M"),
                                                        int(_query.value(0)),
                                                        int(_query.value(1))))
-            self.start_dt += timedelta(seconds=3600)
+            self.start_dt += timedelta(seconds=900)
             # Clear text files
             with open("plot_data_counts.txt", "w") as plot_txt:
                 plot_txt.write('')
@@ -38,7 +38,6 @@ class Plotter(QThread):
                 with open("plot_data_counts.txt", "a") as plot_txt:
                     plot_txt.write(row)
         Popen("./plot_maker.sh")
-
 
     def calculate_totals_by_supplier(supplier, shift):
         totals = []
@@ -67,5 +66,3 @@ class Plotter(QThread):
                     plot_txt.write(row)
         return totals
 
-
-#print(calculate_totals(day_shift(datetime.now()-timedelta(days=2))))

@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-
 from PyQt5 import QtGui, QtWidgets, uic
-
 from operators_gui.sql.sql_queries import *
 from operators_gui.sql.table_models import *
 from operators_gui.misc.labels import *
@@ -180,7 +178,8 @@ class OperatorApp(QtWidgets.QWidget):
                                         self.driver_info[2],
                                         self.loadpoint,
                                         self.unloadpoint,
-                                        QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss'))
+                                        QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss'),
+                                        True)
         elif self.record_id != 0:
             self.update = record_update(self.doc,
                                         self.driver_info[0],
@@ -229,11 +228,11 @@ class OperatorApp(QtWidgets.QWidget):
 
     # Сменить водителя
     def driver_change(self):
-        self.driver_id = int(rfid_to_driver(
+        self.driver_id = rfid_to_driver(
             self.rfidInput.rfid.text()
-        ))
-        self.driver_info = get_driver(self.driver_id)
-        if len(self.driver_info) == 4:
+        )
+        if self.driver_id:
+            self.driver_info = get_driver(self.driver_id)
             self.editForm.driverEdit.setText(self.driver_info[0])
             self.editForm.infoLbl.setText(info_label
                                           .format(self.driver_info[1],

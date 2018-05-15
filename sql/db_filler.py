@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from PyQt5.QtSql import QSqlQuery
 from operators_gui.sql.table_models import *
 from operators_gui.sql.sql_queries import *

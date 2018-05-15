@@ -4,6 +4,7 @@ from PyQt5.QtSql import QSqlQuery
 # import to test query, remove it in release
 # from table_models import *
 
+
 # Данные о рейсе для форм редактирования
 def get_data(record_id):
     _query = QSqlQuery('''
@@ -85,9 +86,11 @@ def get_unloads():
         _data[_query.value(1)] = _query.value(0)
     return _data
 
+
 # Добавить запись
-def record_insert(doc, driver, transport, supplier, loadpoint, unloadpoint, arrival_dt):
-    _query = QSqlQuery('''
+def record_insert(doc, driver, transport, supplier, loadpoint, unloadpoint, arrival_dt, full):
+    if full:
+        _query = QSqlQuery('''
     INSERT INTO trips 
     (trip,
     driver,
@@ -98,13 +101,30 @@ def record_insert(doc, driver, transport, supplier, loadpoint, unloadpoint, arri
     arrival_dt)
     VALUES
     ({}, {}, {}, {}, {}, {}, '{}')'''.format(doc,
-                      driver,
-                      transport,
-                      supplier,
-                      loadpoint,
-                      unloadpoint,
-                      arrival_dt))
+                                             driver,
+                                             transport,
+                                             supplier,
+                                             loadpoint,
+                                             unloadpoint,
+                                             arrival_dt))
+    else:
+        _query = QSqlQuery('''
+            INSERT INTO trips 
+            (trip,
+            driver,
+            transport,
+            supplier,
+            loadpoint,
+            arrival_dt)
+            VALUES
+            ({}, {}, {}, {}, {}, '{}')'''.format(doc,
+                                                 driver,
+                                                 transport,
+                                                 supplier,
+                                                 loadpoint,
+                                                 arrival_dt))
     return True
+
 
 # Обновить запись
 def record_update(doc, driver, transport, supplier, loadpoint, unloadpoint, record_id):
@@ -127,6 +147,7 @@ WHERE
                       record_id))
     return True
 
+
 # Установить пункт выгрузки
 def set_unload(unloadpoint, record_id):
     _query = QSqlQuery('''
@@ -137,6 +158,7 @@ WHERE
     id = {}'''.format(unloadpoint,
                       record_id))
     return True
+
 
 # Список водителей
 def get_driver(driver_id_or_name):
@@ -179,6 +201,7 @@ def get_driver(driver_id_or_name):
             _data.append(_query.value(7))
     return _data
 
+
 # Пункт погрузки
 def get_loadpoint(name):
     _query = QSqlQuery("SELECT id FROM loadpoints WHERE name = '{}'"
@@ -187,6 +210,17 @@ def get_loadpoint(name):
     while (_query.next()):
         _data.append(_query.value(0))
     return _data[0]
+
+
+# Пункт погрузки по умолчанию
+def get_default_loadpoint(supplier_id):
+    _query = QSqlQuery("SELECT default_load FROM suppliers WHERE id = {}"
+                       .format(supplier_id))
+    _data = []
+    while (_query.next()):
+        _data.append(_query.value(0))
+    return _data[0]
+
 
 # Выбрать водителя по карте
 def rfid_to_driver(rfid):
@@ -225,6 +259,7 @@ def get_supplier_name(id):
         _data.append(_query.value(0))
     return _data[0]
 
+
 # Транспорт
 def get_transport(name):
     _query = QSqlQuery("SELECT id FROM transport WHERE plate = '{}'"
@@ -249,3 +284,30 @@ def insert_driver(name, transport, employer, rfid):
                                      employer,
                                      rfid))
     return True
+
+
+# Проверить незавершенные рейсы
+def check_incomplete(driver_id):
+    _query = QSqlQuery("SELECT id, arrival_dt FROM trips WHERE driver = {} AND tare_dt is null"
+                       .format(driver_id))
+    _data = []
+    while (_query.next()):
+        _data.append([_query.value(0),
+                      _query.value(1)])
+    if len(_data) != 0:
+        return _data[0]
+    else:
+        return False
+
+
+# Проверить отмечен ли рейс на поле
+def check_from_field(driver_id):
+    _query = QSqlQuery("SELECT id FROM trips WHERE driver = {} AND arrival_dt is null"
+                       .format(driver_id))
+    _data = []
+    while (_query.next()):
+        _data.append(_query.value(0))
+    if len(_data) != 0:
+        return _data[0]
+    else:
+        return False
