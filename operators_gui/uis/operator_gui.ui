@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1298</width>
+    <width>1354</width>
     <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Оператор приемки</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
@@ -899,7 +899,7 @@ QTabBar::tab:right:!selected{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1298</width>
+     <width>1354</width>
      <height>30</height>
     </rect>
    </property>

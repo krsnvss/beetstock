@@ -1,22 +1,7 @@
 # -*- coding: utf-8 -*-
-from PyQt5.QtSql import QSqlDatabase, QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
+from PyQt5.QtSql import QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
 from PyQt5 import QtCore
-
-# Подключение к базе данных и модели таблиц
-
-# База данных
-db_name = 'beetstock'
-db_user = 'root'
-db_password = 'Root123456'
-db_host = 'localhost'
-
-# Подключение к базе данных
-db = QSqlDatabase.addDatabase("QMYSQL")
-db.setHostName(db_host)
-db.setDatabaseName(db_name)
-db.setUserName(db_user)
-db.setPassword(db_password)
-db.open()
+from operators_gui.sql.db_connection import *
 
 # Модель таблицы "Рейсы"
 tripsModel = QSqlRelationalTableModel()

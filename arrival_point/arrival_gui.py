@@ -3,7 +3,7 @@
 import sys
 from PyQt5 import QtCore, QtWidgets, uic
 from datetime import datetime
-from operators_gui.sql.table_models import *
+from operators_gui.sql.db_connection import *
 from operators_gui.sql.sql_queries import *
 
 
@@ -28,14 +28,9 @@ class ArrivalPoint(QtWidgets.QWidget):
     # Читать введенный номер карты
     def read_rfid(self):
         self.driver_id = rfid_to_driver(self.mainWindow.rfidInput.text())
-        self.incompleted = check_incomplete(self.driver_id)
         if self.driver_id:
-            if self.incompleted:
-                self.mainWindow.stackedWidget.setCurrentIndex(3)
-                self.mainWindow.errorMiddleLabel2.setText(
-                    self.error_middle.format(self.incompleted[0],
-                                             self.incompleted[1].toString()))
-            else:
+            self.trip_state = trip_status(self.driver_id)
+            if self.trip_state[1] == 1 or self.trip_state[1] == 5:
                 self.mainWindow.stackedWidget.setCurrentIndex(1)
                 self.driver_name = get_driver(self.driver_id)[0]
                 self.mainWindow.successHeaderLabel.setText(
@@ -45,6 +40,11 @@ class ArrivalPoint(QtWidgets.QWidget):
                     self.success_middle.format(datetime.now().strftime("%H:%M:%S"))
                 )
                 self.check_arrival()
+            elif 1 < self.trip_state[1] < 5:
+                self.mainWindow.stackedWidget.setCurrentIndex(3)
+                self.mainWindow.errorMiddleLabel2.setText(
+                    self.error_middle.format(self.trip_state[0])
+                )
         else:
             self.mainWindow.stackedWidget.setCurrentIndex(2)
         # Включить таймер для возврата на главную страницу
@@ -61,9 +61,9 @@ class ArrivalPoint(QtWidgets.QWidget):
         self.driver_info = get_driver(self.driver_name)
         self.loadpoint = get_default_loadpoint(self.driver_info[2])
         # TODO добавить для прибывших с поля
-        if check_from_field(self.driver_id):
+        if self.trip_state[1] == 1:
             pass
-        else:
+        elif self.trip_state[1] == 5:
             record_insert(0,
                           self.driver_info[0],
                           self.driver_info[1],

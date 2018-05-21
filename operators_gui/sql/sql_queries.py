@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # SQL запросы используемые в интерфейсе оператора
 from PyQt5.QtSql import QSqlQuery
-# import to test query, remove it in release
-# from table_models import *
 
 
 # Данные о рейсе для форм редактирования
@@ -85,6 +83,24 @@ def get_unloads():
     while (_query.next()):
         _data[_query.value(1)] = _query.value(0)
     return _data
+
+
+# Имя пункта погрузки
+def get_unload_send(trip_id):
+    _query = QSqlQuery('''
+    SELECT 
+    unloadpoints.name
+    FROM
+    trips,
+    unloadpoints
+    WHERE
+    trips.unload_send = unloadpoints.id
+        AND trips.id = {}
+    '''.format(trip_id))
+    _data = []
+    while (_query.next()):
+        _data.append(_query.value(0))
+    return _data[0]
 
 
 # Добавить запись
@@ -286,28 +302,74 @@ def insert_driver(name, transport, employer, rfid):
     return True
 
 
-# Проверить незавершенные рейсы
-def check_incomplete(driver_id):
-    _query = QSqlQuery("SELECT id, arrival_dt FROM trips WHERE driver = {} AND tare_dt is null"
-                       .format(driver_id))
+# Состояние рейса
+# 0 - нет рейсов для этого водителя
+# 1 - есть загрузка, не прибыл
+# 2 - прибыл, нет брутто
+# 3 - есть брутто, нет выгрузки
+# 4 - есть выгрузка, нет тары
+# 5 - рейс завершен
+def trip_status(driver_id):
+    _query = QSqlQuery('''
+    SELECT 
+    load_dt, arrival_dt, gross_dt, unload_dt, tare_dt, id
+    FROM
+    trips
+    WHERE
+    driver = {} order by arrival_dt desc limit 1
+    '''.format(driver_id))
     _data = []
-    while (_query.next()):
-        _data.append([_query.value(0),
-                      _query.value(1)])
-    if len(_data) != 0:
-        return _data[0]
-    else:
-        return False
-
-
-# Проверить отмечен ли рейс на поле
-def check_from_field(driver_id):
-    _query = QSqlQuery("SELECT id FROM trips WHERE driver = {} AND arrival_dt is null"
-                       .format(driver_id))
-    _data = []
-    while (_query.next()):
+    while _query.next():
         _data.append(_query.value(0))
-    if len(_data) != 0:
-        return _data[0]
+        _data.append(_query.value(1))
+        _data.append(_query.value(2))
+        _data.append(_query.value(3))
+        _data.append(_query.value(4))
+        _data.append(_query.value(5))
+    if len(_data) == 6:
+        if _data[1].isNull():
+            status = 1
+        elif _data[2].isNull():
+            status = 2
+        elif _data[3].isNull():
+            status = 3
+        elif _data[4].isNull():
+            status = 4
+        else:
+            status = 5
     else:
-        return False
+        status = 0
+    return [_data[5], status]
+
+
+# Отметить брутто
+def check_weight(trip_id, weight_type, weight, weight_dt):
+    if weight_type == 'gross':
+        _query = QSqlQuery('''
+        UPDATE trips 
+        SET 
+            gross_weight = {},
+            gross_dt = '{}'
+        WHERE
+            id = {}'''.format(
+            weight,
+            weight_dt,
+            trip_id)
+        )
+    elif weight_type == 'tare':
+        _query = QSqlQuery('''
+        UPDATE trips 
+                SET 
+                    tare_weight = {},
+                    tare_dt = '{}',
+                    net_weight = gross_weight - tare_weight
+                WHERE
+                    id = {}'''.format(
+            weight,
+            weight_dt,
+            trip_id)
+        )
+
+#
+#from operators_gui.sql.db_connection import *
+#print(trip_status(1))
