@@ -158,6 +158,7 @@ class OperatorApp(QtWidgets.QWidget):
             self.complete_hidden_columns = [8, 10, 15, 18, 20, 21]
             self.hide_columns(self.complete_hidden_columns)
             self.window.dateEdit.setVisible(True)
+        self.table_update()
         self.window.mainTable.setColumnWidth(0, 50)
         self.window.mainTable.resizeRowsToContents()
 
@@ -211,6 +212,7 @@ class OperatorApp(QtWidgets.QWidget):
     def table_update(self):
         if self.window.mainTable.model() is not None:
             self.window.mainTable.model().select()
+            self.window.mainTable.resizeRowsToContents()
         self.plotter.start()
         self.window.tripChartLabel.setPixmap(QtGui.QPixmap("./res/plot_count.png"))
         self.window.tonnChartLabel.setPixmap(QtGui.QPixmap("./res/plot_sum.png"))

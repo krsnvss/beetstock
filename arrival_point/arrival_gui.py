@@ -3,8 +3,8 @@
 import sys
 from PyQt5 import QtCore, QtWidgets, uic
 from datetime import datetime
-from operators_gui.sql.db_connection import *
-from operators_gui.sql.sql_queries import *
+from sql.db_connection import *
+from sql.sql_queries import *
 
 
 # Основное окно

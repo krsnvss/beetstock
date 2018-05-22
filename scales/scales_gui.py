@@ -3,8 +3,9 @@
 import sys
 from PyQt5 import QtCore, QtWidgets, uic
 from datetime import datetime
-from operators_gui.sql.db_connection import *
-from operators_gui.sql.sql_queries import *
+from sql.db_connection import *
+from sql.sql_queries import *
+from random import uniform
 
 
 # Основное окно
@@ -22,6 +23,8 @@ class Scales(QtWidgets.QWidget):
         # Сохранить текст, чтобы не потерять форматирование
         self.success_header = self.mainWindow.successHeaderLabel.text()
         self.success_middle = self.mainWindow.successMiddleLabel.text()
+        self.success_header_2 = self.mainWindow.successHeaderLabel_2.text()
+        self.success_middle_2 = self.mainWindow.successMiddleLabel_2.text()
         self.error_middle = self.mainWindow.errorMiddleLabel2.text()
         self.mainWindow.show()
 
@@ -34,7 +37,7 @@ class Scales(QtWidgets.QWidget):
             self.trip_state = trip_status(self.driver_id)
             if self.trip_state[1] == 2:
                 self.check_weight('gross')
-                self.show_check_screen()
+                self.show_check_screen('gross')
             elif self.trip_state[1] == 3:
                 self.mainWindow.stackedWidget.setCurrentIndex(3)
                 self.mainWindow.errorMiddleLabel2.setText(
@@ -46,7 +49,7 @@ class Scales(QtWidgets.QWidget):
                 )
             elif self.trip_state[1] == 4:
                 self.check_weight('tare')
-                self.show_check_screen()
+                self.show_check_screen('tare')
             elif self.trip_state[1] == 5:
                 self.mainWindow.stackedWidget.setCurrentIndex(4)
         else:
@@ -61,24 +64,35 @@ class Scales(QtWidgets.QWidget):
         self.return_timer.stop()
 
     # Показать окно отметки
-    def show_check_screen(self):
-        self.mainWindow.stackedWidget.setCurrentIndex(1)
-        self.driver_name = get_driver(self.driver_id)[0]
-        self.mainWindow.successHeaderLabel.setText(
-            self.success_header.format(self.driver_name)
-        )
-        self.mainWindow.successMiddleLabel.setText(
-            self.success_middle.format(datetime.now().strftime("%H:%M:%S"),
-                                       get_unload_send(self.trip_state[0])
-                                       )
-        )
+    def show_check_screen(self, weight_type):
+        self.weight_type = weight_type
+        if self.weight_type == 'gross':
+            self.mainWindow.stackedWidget.setCurrentIndex(1)
+            self.driver_name = get_driver(self.driver_id)[0]
+            self.mainWindow.successHeaderLabel.setText(
+                self.success_header.format(self.driver_name)
+            )
+            self.mainWindow.successMiddleLabel.setText(
+                self.success_middle.format(datetime.now().strftime("%H:%M:%S"),
+                                           get_unload_send(self.trip_state[0])
+                                           )
+            )
+        elif self.weight_type == 'tare':
+            self.mainWindow.stackedWidget.setCurrentIndex(5)
+            self.driver_name = get_driver(self.driver_id)[0]
+            self.mainWindow.successHeaderLabel_2.setText(
+                self.success_header_2.format(self.driver_name)
+            )
+            self.mainWindow.successMiddleLabel_2.setText(
+                self.success_middle_2.format(datetime.now().strftime("%H:%M:%S"))
+            )
 
     # Записать в БД
     def check_weight(self, weight_type):
         self.weight_type = weight_type
         check_weight(self.trip_state[0],
                      self.weight_type,
-                     10,
+                     round(uniform(10.0, 50.0), 2),
                      QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
                      )
 

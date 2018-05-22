@@ -39,7 +39,7 @@ class Plotter(QThread):
                     plot_txt.write(row)
         Popen("./plot_maker.sh")
 
-    def calculate_totals_by_supplier(supplier, shift):
+    def calculate_totals_by_supplier(self, supplier, shift):
         totals = []
         start_dt = shift[0]
         supplier_name = get_supplier_name(supplier)

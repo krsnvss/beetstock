@@ -11,6 +11,7 @@ from sql.sql_queries import get_driver
 class EditorApp(QtWidgets.QWidget):
 
     def __init__(self):
+        super(EditorApp, self).__init__()
         self.gui()
 
     def gui(self):

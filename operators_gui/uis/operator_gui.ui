@@ -434,6 +434,9 @@ QTabBar::tab:right:!selected{
         </item>
         <item row="1" column="1" rowspan="15" colspan="5">
          <widget class="QTableView" name="mainTable">
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
+          </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>

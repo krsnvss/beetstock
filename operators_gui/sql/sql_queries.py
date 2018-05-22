@@ -100,7 +100,10 @@ def get_unload_send(trip_id):
     _data = []
     while (_query.next()):
         _data.append(_query.value(0))
-    return _data[0]
+    if len(_data) > 0:
+        return _data[0]
+    else:
+        return "Выгрузка не назначена"
 
 
 # Добавить запись
