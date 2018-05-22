@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Графический интерфейс пункта выгрузки
 import sys
-from PyQt5 import QtCore, QtWidgets, uic
+from PyQt5 import QtCore, QtWidgets, uic, QtPrintSupport
 from datetime import datetime
 from sql.db_connection import *
 from sql.sql_queries import *
