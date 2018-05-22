@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>924</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Печать отчетов</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTableView{
+	background-color:#ffffff;
+	alternate-background-color:#e2e2e2;
+	color:#3a3b3a;
+	border-style:solid;
+	border-color:#ffffff;
+	border-width:0px;
+	selection-color:#ffffff;
+	selection-background-color:#54b0cb;
+}
+QHeaderView::section{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:40px;
+	border: #ffffff;
+	border-style:solid;
+	border-width:0px;
+}
+QComboBox{
+	background-color:#ffffff;
+	border-style:solid;
+	border-width:2px;
+	border-color:#ffffff;
+	color:#3a3b3a;
+	width:50px;
+	height:30px;
+	font:bold;
+	padding-left:5px
+}
+QComboBox QAbstractItemView {
+	background-color:#ffffff;
+	color:#3a3b3a;
+    border: 2px solid #ffffff;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;
+	padding-bottom:2px
+}
+QComboBox::drop-down {
+   width: 24px;
+   border: 2px;
+}
+QComboBox::down-arrow {
+    image: url(&quot;./res/if_chevron-left.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QComboBox::down-arrow::hover {
+    image: url(&quot;./res/if_chevron-down.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QDateEdit{
+	background-color:#ffffff;
+	border-style:solid;
+	border-width:2px;
+	border-color:#ffffff;
+	color:#3a3b3a;
+	width:150px;
+	height:30px;
+	font:bold;
+	padding-left:5px
+}
+QDateEdit QAbstractItemView {
+	background-color:#ffffff;
+	color:#3a3b3a;;
+}
+QDateEdit::drop-down {
+   width: 24px;
+   border: 2px;
+}
+QDateEdit::down-arrow {
+    image: url(&quot;./res/if_chevron-left.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QDateEdit::down-arrow::hover {
+    image: url(&quot;./res/if_chevron-down.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QMenuBar{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	selection-color:#54b0cb;
+	font:bold
+}
+QMenuBar::item::selected{
+	background-color:#54b0cb;
+	color:#ffffff;
+	font:bold;
+	padding-left:2px
+}
+QToolBar{
+	background-color:#3a3b3a;
+	color:#ffffff;
+}
+QMenu {
+	background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	padding-left:2px;
+}
+QMenu::hover {
+    background-color: #448fa6;
+    color:#3a3b3a;
+	font:bold
+}
+QMenu::item {
+    background-color:#3a3b3a;
+	color:#ffffff;
+}
+QMenu::item::selected{
+	background-color:#54b0cb;
+	color:#ffffff;
+	padding-left:10px;
+}
+QTabWidget{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTabBar::tab:right:selected{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QTabBar::tab:right:!selected{
+    background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QLabel{
+	background-color:#448fa6;
+	color:#ffffff;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QGroupBox{
+	background-color:#448fa6;
+	color:#ffffff;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QPushButton{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	height:80px;
+	width: 60px;
+	border: #ffffff;
+	border-style:solid;
+	border-width:5px;
+	font:14px;
+	font-weight: bold
+}
+QPushButton::pressed{
+	background-color:#ffffff;
+	color:#3a3b3a;
+	border:2px solid #3a3b3a;
+}
+QPushButton::hover{
+	color:#448fa6;
+	border:2px solid #448fa6;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QWebView" name="webView">
+      <property name="url">
+       <url>
+        <string>about:blank</string>
+       </url>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>924</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="printAction"/>
+   <addaction name="separator"/>
+   <addaction name="closeAction"/>
+  </widget>
+  <action name="printAction">
+   <property name="text">
+    <string>Распечатать</string>
+   </property>
+   <property name="toolTip">
+    <string>Распечатать ТТН</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="closeAction">
+   <property name="text">
+    <string>Закрыть окно</string>
+   </property>
+   <property name="toolTip">
+    <string>Закрыть окно просмотра</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
