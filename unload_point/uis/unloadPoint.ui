@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Пункт прибытия</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTableView{
+	background-color:#ffffff;
+	alternate-background-color:#e2e2e2;
+	color:#3a3b3a;
+	border-style:solid;
+	border-color:#ffffff;
+	border-width:0px;
+	selection-color:#ffffff;
+	selection-background-color:#54b0cb;
+}
+QHeaderView::section{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:40px;
+	border: #ffffff;
+	border-style:solid;
+	border-width:0px;
+}
+QComboBox{
+	background-color:#ffffff;
+	border-style:solid;
+	border-width:2px;
+	border-color:#ffffff;
+	color:#3a3b3a;
+	width:50px;
+	height:30px;
+	font:bold;
+	padding-left:5px
+}
+QComboBox QAbstractItemView {
+	background-color:#ffffff;
+	color:#3a3b3a;
+    border: 2px solid #ffffff;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;
+	padding-bottom:2px
+}
+QComboBox::drop-down {
+   width: 24px;
+   border: 2px;
+}
+QComboBox::down-arrow {
+    image: url(&quot;./res/if_chevron-left.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QComboBox::down-arrow::hover {
+    image: url(&quot;./res/if_chevron-down.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QDateEdit{
+	background-color:#ffffff;
+	border-style:solid;
+	border-width:2px;
+	border-color:#ffffff;
+	color:#3a3b3a;
+	width:150px;
+	height:30px;
+	font:bold;
+	padding-left:5px
+}
+QDateEdit QAbstractItemView {
+	background-color:#ffffff;
+	color:#3a3b3a;;
+}
+QDateEdit::drop-down {
+   width: 24px;
+   border: 2px;
+}
+QDateEdit::down-arrow {
+    image: url(&quot;./res/if_chevron-left.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QDateEdit::down-arrow::hover {
+    image: url(&quot;./res/if_chevron-down.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QMenuBar{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	selection-color:#54b0cb;
+	font:bold
+}
+QMenuBar::item::selected{
+	background-color:#54b0cb;
+	color:#ffffff;
+	font:bold;
+	padding-left:2px
+}
+QToolBar{
+	background-color:#3a3b3a;
+	color:#ffffff;
+}
+QMenu {
+	background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	padding-left:2px;
+}
+QMenu::hover {
+    background-color: #448fa6;
+    color:#3a3b3a;
+	font:bold
+}
+QMenu::item {
+    background-color:#3a3b3a;
+	color:#ffffff;
+}
+QMenu::item::selected{
+	background-color:#54b0cb;
+	color:#ffffff;
+	padding-left:10px;
+}
+QTabWidget{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTabBar::tab:right:selected{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QTabBar::tab:right:!selected{
+    background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QLabel{
+	background-color:#448fa6;
+	color:#ffffff;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QGroupBox{
+	background-color:#448fa6;
+	color:#ffffff;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QPushButton{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	height:80px;
+	width: 60px;
+	border: #ffffff;
+	border-style:solid;
+	border-width:5px;
+	font-weight: bold
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="inputPage">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="headerLabel">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; color:#ffffff;&quot;&gt;Отметка выгрузки&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="successPage">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="successHeaderLabel">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600;&quot;&gt;Выгрузка отмечена!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="successMiddleLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	background-color:rgb(35, 35, 35);
+	color:rgb(255, 255, 255);
+	font-weight:bold
+}</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Время выгрузки:&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;{}&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="errorPage">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="errorHeaderLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	background-color:rgb(255, 0, 0);
+	color:rgb(255, 255, 255);
+	font-weight:bold
+}</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Карта не зарегистрирована!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="errorMiddleLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	background-color:rgb(35, 35, 35);
+	color:rgb(255, 255, 255);
+	font-weight:bold
+}</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Номер предъявленной карты не зарегистрирован в системе приемки. &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Обратитесь к оператору на бракплощадке.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="errorPage2">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="errorHeaderLabel2">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	background-color:rgb(255, 0, 0);
+	color:rgb(255, 255, 255);
+	font-weight:bold
+}</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Нет массы брутто!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="errorMiddleLabel2">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	background-color:rgb(35, 35, 35);
+	color:rgb(255, 255, 255);
+	font-weight:bold
+}</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Рейс №{}&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Вернитесь на автомобильные весы для взвешивания массы брутто!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

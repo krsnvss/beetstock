@@ -1,4 +1,4 @@
-#!/usr/share/python3
+#!/usr/bin/python3
 # Графический интерфейс терминала в точке отметки прибытия
 import sys
 from PyQt5 import QtCore, QtWidgets, uic

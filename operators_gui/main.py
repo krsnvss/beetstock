@@ -3,13 +3,13 @@
 
 import sys
 from PyQt5 import QtGui, QtWidgets, uic
-from operators_gui.sql.sql_queries import *
-from operators_gui.sql.table_models import *
-from operators_gui.misc.labels import *
-from operators_gui.misc.checkers import *
-from operators_gui.misc.dates import *
-from operators_gui.misc.parameters import *
-from operators_gui.plotter import Plotter
+from sql.sql_queries import *
+from sql.table_models import *
+from misc.labels import *
+from misc.checkers import *
+from misc.dates import *
+from misc.parameters import *
+from plotter import Plotter
 
 
 class OperatorApp(QtWidgets.QWidget):

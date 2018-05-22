@@ -1,6 +1,6 @@
-from operators_gui.sql.sql_queries import *
-from operators_gui.sql.table_models import *
-from operators_gui.misc.dates import *
+from sql.sql_queries import *
+from sql.table_models import *
+from misc.dates import *
 from subprocess import Popen
 from PyQt5.QtCore import QThread
 
