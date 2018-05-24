@@ -9,8 +9,8 @@ from misc.labels import *
 from misc.checkers import *
 from misc.dates import *
 from misc.parameters import *
-from plotter import Plotter
-from doc_print import DocPrinter, ThreadPrinter
+from operators_gui.plotter import Plotter
+from operators_gui.doc_print import DocPrinter, ThreadPrinter
 
 
 class OperatorApp(QtWidgets.QWidget):
@@ -359,14 +359,18 @@ class OperatorApp(QtWidgets.QWidget):
         # Открыть пустую форму редактирования рейса
         self.editForm = uic.loadUi("./uis/trip_edit.ui")
         self.editForm.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        self.editForm.headerEdit.setText("Новый рейс")
         # Список выгрузок
         self.unloads = get_unloads()
         self.editForm.unloadsList.addItems([item for item in self.unloads])
         # Подключить действия к кнопкам
-        self.editForm.cancelBtn.clicked.connect(
+        self.editForm.saveBtn.clicked.connect(self.save_trip)
+        self.editForm.headerEdit.addAction(self.editForm.closeForm, 1)
+        self.editForm.closeForm.triggered.connect(
             lambda: self.editForm.close()
         )
-        self.editForm.saveBtn.clicked.connect(self.save_trip)
+        self.editForm.headerEdit.addAction(self.editForm.saveChanges, 1)
+        self.editForm.saveChanges.triggered.connect(self.save_trip)
         # Кнопки на полях ввода
         self.editForm.driverEdit.addAction(self.editForm.changeDriver, 1)
         self.editForm.changeDriver.triggered.connect(

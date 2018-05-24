@@ -33,10 +33,10 @@ class Plotter(QThread):
             self.start_dt += timedelta(seconds=900)
         if not self.is_empty(self.counts):
             # Clear text files
-            with open("plot_data_counts.txt", "w") as plot_txt:
+            with open("plot_data.txt", "w") as plot_txt:
                 plot_txt.write('')
             for row in self.counts:
-                with open("plot_data_counts.txt", "a") as plot_txt:
+                with open("plot_data.txt", "a") as plot_txt:
                     plot_txt.write(row)
             Popen("./plot_maker.sh")
 
