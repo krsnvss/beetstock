@@ -29,11 +29,39 @@ class Launcher(QtWidgets.QWidget):
         self.launcher_window.unloadButton.clicked.connect(
             lambda: self.start_gui(Unloader())
         )
+        # Системный трей
+        self.tray_icon = QtWidgets.QSystemTrayIcon(self)
+        self.tray_icon.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_TitleBarMenuButton))
+        self.launcher_window.showWindow.triggered.connect(
+            lambda: self.center(self.launcher_window)
+        )
+        self.launcher_window.hideWindow.triggered.connect(
+            self.launcher_window.hide
+        )
+        self.launcher_window.closeWindow.triggered.connect(
+            QtWidgets.qApp.quit
+        )
+        self.tray_menu = QtWidgets.QMenu()
+        self.tray_menu.addAction(self.launcher_window.showWindow)
+        self.tray_menu.addAction(self.launcher_window.hideWindow)
+        self.tray_menu.addAction(self.launcher_window.closeWindow)
+        self.tray_icon.setContextMenu(self.tray_menu)
+        self.tray_icon.show()
+        self.center(self.launcher_window)
         self.launcher_window.show()
 
     def start_gui(self, _gui):
         self.gui = _gui
         self.gui
+        self.launcher_window.hide()
+
+    # Показать окно по центру экрана
+    def center(self, _widget):
+        self.launcher_window.show()
+        self.widget_size = _widget.frameGeometry()
+        self.display_center = QtWidgets.QDesktopWidget().availableGeometry().center()
+        self.widget_size.moveCenter(self.display_center)
+        _widget.move(self.widget_size.topLeft())
 
 
 if __name__ == '__main__':

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Выбор интерфейса</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../res/if_menu_white.png</normaloff>../res/if_menu_white.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
 	background-color:#3a3b3a;
@@ -267,6 +271,42 @@ QPushButton::hover{
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="showWindow">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_triangle_up.png</normaloff>../res/if_triangle_up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Развернуть</string>
+   </property>
+   <property name="toolTip">
+    <string>Показать окно</string>
+   </property>
+  </action>
+  <action name="hideWindow">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_triangle_down.png</normaloff>../res/if_triangle_down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Свернуть в трей</string>
+   </property>
+   <property name="toolTip">
+    <string>Свернуть окно в трей</string>
+   </property>
+  </action>
+  <action name="closeWindow">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_x.png</normaloff>../res/if_x.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выйти</string>
+   </property>
+   <property name="toolTip">
+    <string>Выйти из приложения</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

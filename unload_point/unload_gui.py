@@ -36,6 +36,10 @@ class Unloader(QtWidgets.QWidget):
         # Сохранить текст, чтобы не потерять форматирование
         self.success_middle = self.mainWindow.successMiddleLabel.text()
         self.error_middle = self.mainWindow.errorMiddleLabel2.text()
+        # Окно без заголовка
+        self.mainWindow.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        # При открытии окна, оно будет развернуто на всю доступную область
+        self.mainWindow.setGeometry(QtWidgets.QDesktopWidget().availableGeometry())
         self.fill_buttons()
         self.mainWindow.show()
 

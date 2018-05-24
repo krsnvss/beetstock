@@ -26,6 +26,10 @@ class Scales(QtWidgets.QWidget):
         self.success_header_2 = self.mainWindow.successHeaderLabel_2.text()
         self.success_middle_2 = self.mainWindow.successMiddleLabel_2.text()
         self.error_middle = self.mainWindow.errorMiddleLabel2.text()
+        # Окно без заголовка
+        self.mainWindow.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        # При открытии окна, оно будет развернуто на всю доступную область
+        self.mainWindow.setGeometry(QtWidgets.QDesktopWidget().availableGeometry())
         self.mainWindow.show()
 
     # Читать введенный номер карты

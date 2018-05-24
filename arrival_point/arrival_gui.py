@@ -2,7 +2,6 @@
 # Графический интерфейс терминала в точке отметки прибытия
 import sys
 from PyQt5 import QtCore, QtWidgets, uic
-from datetime import datetime
 from sql.db_connection import *
 from sql.sql_queries import *
 
@@ -23,6 +22,10 @@ class ArrivalPoint(QtWidgets.QWidget):
         self.success_header = self.mainWindow.successHeaderLabel.text()
         self.success_middle = self.mainWindow.successMiddleLabel.text()
         self.error_middle = self.mainWindow.errorMiddleLabel2.text()
+        # Окно без заголовка
+        self.mainWindow.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        # При открытии окна, оно будет развернуто на всю доступную область
+        self.mainWindow.setGeometry(QtWidgets.QDesktopWidget().availableGeometry())
         self.mainWindow.show()
 
     # Читать введенный номер карты
@@ -37,7 +40,7 @@ class ArrivalPoint(QtWidgets.QWidget):
                     self.success_header.format(self.driver_name)
                 )
                 self.mainWindow.successMiddleLabel.setText(
-                    self.success_middle.format(datetime.now().strftime("%H:%M:%S"))
+                    self.success_middle.format(QtCore.QDateTime.currentDateTime().toString("hh:mm:ss"))
                 )
                 self.check_arrival()
             elif 1 < self.trip_state[1] < 5:

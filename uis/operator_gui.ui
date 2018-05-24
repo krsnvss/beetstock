@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Оператор приемки</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../res/if_user_white.png</normaloff>../res/if_user_white.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
 	background-color:#3a3b3a;
