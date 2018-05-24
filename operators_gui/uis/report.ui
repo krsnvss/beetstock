@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -114,7 +117,11 @@ QMenuBar::item::selected{
 	padding-left:2px
 }
 QToolBar{
-	background-color:#3a3b3a;
+	background-color:#448fa6;
+	color:#ffffff;
+}
+QToolBar::item{
+	background-color:#448fa6;
 	color:#ffffff;
 }
 QMenu {
@@ -240,6 +247,10 @@ QPushButton::hover{
    <addaction name="closeAction"/>
   </widget>
   <action name="printAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_printer_white.png</normaloff>../res/if_printer_white.png</iconset>
+   </property>
    <property name="text">
     <string>Распечатать</string>
    </property>
@@ -251,6 +262,10 @@ QPushButton::hover{
    </property>
   </action>
   <action name="closeAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_log-out_white.png</normaloff>../res/if_log-out_white.png</iconset>
+   </property>
    <property name="text">
     <string>Закрыть окно</string>
    </property>

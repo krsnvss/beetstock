@@ -541,7 +541,7 @@ QTabBar::tab:right:!selected{
            <enum>QTabWidget::West</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -975,6 +975,18 @@ QTabBar::tab:right:!selected{
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="actionPrintDoc">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_printer_white.png</normaloff>../res/if_printer_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>printDoc</string>
+   </property>
+   <property name="toolTip">
+    <string>Распечатать ТТН</string>
    </property>
   </action>
  </widget>

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>400</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -124,22 +124,20 @@ QHeaderView::section{
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="headerLbl">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+    <widget class="QLineEdit" name="headerEdit">
      <property name="styleSheet">
-      <string notr="true">QLabel{
+      <string notr="true">QLineEdit{
+	background-color:#54b0cb;
 	color:#ffffff;
-	font:18px bold;
-	border:0px solid #3a3b3a;
+	font:bold;
+	border-color:#54b0cb;
 }</string>
      </property>
      <property name="text">
-      <string>ПРАВКА РЕЙСА №</string>
+      <string/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -232,29 +230,6 @@ QPushButton::pressed{
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QPushButton" name="cancelBtn">
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-	background-color:#3a3b3a;
-	color:#ffffff;
-	font:bold;
-	border:2px solid #ffffff;
-}
-QPushButton::hover{
-	color:#448fa6;
-	border:2px solid #448fa6;
-}
-QPushButton::pressed{
-	color:#3a3b3a;
-	border:2px solid #3a3b3a;
-}</string>
-     </property>
-     <property name="text">
-      <string>Закрыть без сохранения изменений</string>
-     </property>
-    </widget>
-   </item>
   </layout>
   <action name="changeDriver">
    <property name="icon">
@@ -267,6 +242,9 @@ QPushButton::pressed{
    <property name="toolTip">
     <string>Изменить водителя</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
+   </property>
   </action>
   <action name="changeLoad">
    <property name="icon">
@@ -278,6 +256,39 @@ QPushButton::pressed{
    </property>
    <property name="toolTip">
     <string>Изменить пункт погрузки</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
+  <action name="closeForm">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_x_white.png</normaloff>../res/if_x_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Закрыть</string>
+   </property>
+   <property name="toolTip">
+    <string>Закрыть форму редактирования рейса</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="saveChanges">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_save_white.png</normaloff>../res/if_save_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+   <property name="toolTip">
+    <string>Сохранить изменения</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

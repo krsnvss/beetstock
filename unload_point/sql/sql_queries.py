@@ -372,15 +372,17 @@ def check_weight(trip_id, weight_type, weight, weight_dt):
 
 
 # Отметить выгрузку
-def check_unload(trip_id, unload_fact, unload_dt):
+def check_unload(trip_id, unload_fact, unloaders, unload_dt):
     _query = QSqlQuery('''
         UPDATE trips 
         SET 
             unload_fact = {},
+            unloaders = {},
             unload_dt = '{}'
         WHERE
             id = {}'''.format(
         unload_fact,
+        unloaders,
         unload_dt,
         trip_id)
     )

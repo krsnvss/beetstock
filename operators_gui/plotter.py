@@ -31,13 +31,14 @@ class Plotter(QThread):
                                                        int(_query.value(0)),
                                                        int(_query.value(1))))
             self.start_dt += timedelta(seconds=900)
+        if not self.is_empty(self.counts):
             # Clear text files
             with open("plot_data_counts.txt", "w") as plot_txt:
                 plot_txt.write('')
             for row in self.counts:
                 with open("plot_data_counts.txt", "a") as plot_txt:
                     plot_txt.write(row)
-        Popen("./plot_maker.sh")
+            Popen("./plot_maker.sh")
 
     def calculate_totals_by_supplier(self, supplier, shift):
         totals = []
@@ -65,4 +66,12 @@ class Plotter(QThread):
                 with open("plot_data.txt", "a") as plot_txt:
                     plot_txt.write(row)
         return totals
+
+    def is_empty(self, values):
+        self.values = values
+        self.isEmpty = True
+        for value in self.values:
+            if int(value.split(" ")[1]) != 0:
+                self.isEmpty = False
+        return self.isEmpty
 

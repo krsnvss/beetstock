@@ -10,6 +10,7 @@ from misc.checkers import *
 from misc.dates import *
 from misc.parameters import *
 from plotter import Plotter
+from doc_print import DocPrinter, ThreadPrinter
 
 
 class OperatorApp(QtWidgets.QWidget):
@@ -21,6 +22,7 @@ class OperatorApp(QtWidgets.QWidget):
         self.timer.timeout.connect(self.table_update)
         self.timer.setInterval(table_update)
         self.timer.start()
+        # обновление графиков
         self.plotter = Plotter(self)
         self.gui()
 
@@ -85,7 +87,7 @@ class OperatorApp(QtWidgets.QWidget):
             self.editForm = uic.loadUi("./uis/trip_edit.ui")
             self.editForm.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
             # Заполнить поля
-            self.editForm.headerLbl.setText(edit_header.format(str(self.trip_data[0])))
+            self.editForm.headerEdit.setText(edit_header.format(str(self.trip_data[0])))
             self.editForm.docEdit.setText(str(self.trip_data[1]))
             self.editForm.driverEdit.setText(self.trip_data[2])
             self.editForm.infoLbl.setText(info_label
@@ -100,10 +102,17 @@ class OperatorApp(QtWidgets.QWidget):
                 self.current_unload = self.trip_data[9]
                 self.editForm.unloadsList.setCurrentIndex(self.unloads[self.trip_data[9]] - 1)
             # Подключить действия к кнопкам
-            self.editForm.cancelBtn.clicked.connect(
+            self.editForm.saveBtn.clicked.connect(self.save_trip)
+            self.editForm.headerEdit.addAction(self.editForm.closeForm, 1)
+            self.editForm.closeForm.triggered.connect(
                 lambda: self.editForm.close()
             )
-            self.editForm.saveBtn.clicked.connect(self.save_trip)
+            self.editForm.headerEdit.addAction(self.window.actionPrintDoc, 1)
+            self.window.actionPrintDoc.triggered.connect(
+                lambda: self.print_doc(self.trip_data[0])
+            )
+            self.editForm.headerEdit.addAction(self.editForm.saveChanges, 1)
+            self.editForm.saveChanges.triggered.connect(self.save_trip)
             # Кнопки на полях ввода
             if self.window.tableSelector.currentIndex() == 3:
                 self.editForm.driverEdit.addAction(self.editForm.changeDriver, 1)
@@ -409,6 +418,13 @@ class OperatorApp(QtWidgets.QWidget):
         self.supplierSelect.refTable.doubleClicked.connect(
             lambda: self.selector_double_click(2))
         self.supplierSelect.show()
+
+    # Печать документа
+    def print_doc(self, trip_id):
+        self.trip_id = trip_id
+        self.printer = ThreadPrinter()
+        self.printer.run(self.trip_id)
+        self.editForm.close()
 
 
 if __name__ == '__main__':

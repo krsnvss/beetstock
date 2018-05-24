@@ -19,6 +19,7 @@ class Unloader(QtWidgets.QWidget):
         # Загрузить настройки
         self.update_interval = 5000
         self.unload_id = 1
+        self.unloader_id = 1
         # Установить таймеры:
         # Возврат на начальную страницу
         self.return_timer = QtCore.QTimer()
@@ -29,6 +30,9 @@ class Unloader(QtWidgets.QWidget):
         self.update_timer.timeout.connect(self.fill_buttons)
         self.update_timer.setInterval(self.update_interval)
         self.update_timer.start()
+        # Привязать действие к заголовку
+        self.mainWindow.lineEdit.addAction(self.mainWindow.changeUnloaders, 1)
+        self.mainWindow.changeUnloaders.triggered.connect(self.change_unloaders)
         # Сохранить текст, чтобы не потерять форматирование
         self.success_middle = self.mainWindow.successMiddleLabel.text()
         self.error_middle = self.mainWindow.errorMiddleLabel2.text()
@@ -86,8 +90,13 @@ class Unloader(QtWidgets.QWidget):
         check_unload(
             self.trip_id,
             self.unload_id,
+            self.unloader_id,
             QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
         )
+
+    # Смена бригады выгрузчиков
+    def change_unloaders(self):
+        print("change!")
 
 
 if __name__ == '__main__':

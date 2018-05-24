@@ -2,18 +2,13 @@
 
 # Форма редактирования рейсов
 # Заголовок
-edit_header = "Редактирование рейса №{}"
+edit_header = "РЕЙС №{}"
 
 # Сведения о карте
 info_label = '''
-<html>
-<head/>
-<body>
-<p>Автомобиль: <span style=" font-weight:600;">{}</span></p>
-<p>Прицеп: <span style=" font-weight:600;">{}</span></p>
-<p>Поставщик: <span style=" font-weight:600;">{}</span></p>
-</body>
-</html>'''
+<p>Автомобиль: <strong>{}</strong></p>
+<p>Прицеп: <strong>{}</strong></p>
+<p>Поставщик: <strong>{}</strong></p>'''
 
 # Текст ошибки при вводе неверного имени водителя в форме добавления карты
 wrong_name = "Неверно введены Ф.И.О. водителя"
