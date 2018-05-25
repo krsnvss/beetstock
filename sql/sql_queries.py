@@ -375,15 +375,17 @@ def check_weight(trip_id, weight_type, weight, weight_dt):
 
 
 # Отметить выгрузку
-def check_unload(trip_id, unload_fact, unload_dt):
+def check_unload(trip_id, unload_fact, unloaders, unload_dt):
     _query = QSqlQuery('''
         UPDATE trips 
         SET 
             unload_fact = {},
+            unloaders = {},
             unload_dt = '{}'
         WHERE
             id = {}'''.format(
         unload_fact,
+        unloaders,
         unload_dt,
         trip_id)
     )
@@ -398,6 +400,7 @@ def get_unload_list(unload_id):
     trips
     WHERE
     unload_send = {} AND unload_dt IS NULL
+    AND gross_weight > 0
     ORDER BY gross_dt ASC
     LIMIT 6'''.format(unload_id))
     _data = []
@@ -405,6 +408,26 @@ def get_unload_list(unload_id):
         _data.append([_query.value(0),
                       _query.value(1),
                       _query.value(2)])
+    return _data
+
+
+# получить сведения о бригаде выгрузчиков
+def get_unloaders(rfid):
+    _query = QSqlQuery('''
+        SELECT 
+        id, name, assistant1, assistant2, assistant3, unload_point
+        FROM
+        unloaders
+        WHERE
+        rfid = {}'''.format(rfid))
+    _data = []
+    while _query.next():
+        _data.append(_query.value(0))
+        _data.append(_query.value(1))
+        _data.append(_query.value(2))
+        _data.append(_query.value(3))
+        _data.append(_query.value(4))
+        _data.append(_query.value(5))
     return _data
 
 #from operators_gui.sql.db_connection import *

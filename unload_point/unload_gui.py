@@ -30,12 +30,19 @@ class Unloader(QtWidgets.QWidget):
         self.update_timer.timeout.connect(self.fill_buttons)
         self.update_timer.setInterval(self.update_interval)
         self.update_timer.start()
-        # Привязать действие к заголовку
+        # Привязать действие к полю ввода rfid
         self.mainWindow.lineEdit.addAction(self.mainWindow.changeUnloaders, 1)
         self.mainWindow.changeUnloaders.triggered.connect(self.change_unloaders)
+        self.mainWindow.lineEdit.returnPressed.connect(self.change_unloaders)
+        # Привязять действия к кнопкам
+        self.mainWindow.changeUnloader.clicked.connect(
+            lambda: self.mainWindow.stackedWidget.setCurrentIndex(4)
+        )
         # Сохранить текст, чтобы не потерять форматирование
         self.success_middle = self.mainWindow.successMiddleLabel.text()
         self.error_middle = self.mainWindow.errorMiddleLabel2.text()
+        # Спрятать надпись ссо списком выгрузчиков
+        self.mainWindow.unloaderLabel.setVisible(False)
         # Окно без заголовка
         self.mainWindow.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
         # При открытии окна, оно будет развернуто на всю доступную область
@@ -57,9 +64,10 @@ class Unloader(QtWidgets.QWidget):
             self.driver = get_driver(item[1])[0]
             self.transport = get_driver(item[1])[1]
             self.button = QtWidgets.QPushButton(
-                "{} / {}".format(
+                "{} / {} / {}".format(
                     self.trip_id,
-                    self.transport
+                    self.transport,
+                    self.driver
                 )
             )
             self.button.clicked.connect(self.click_button)
@@ -67,7 +75,9 @@ class Unloader(QtWidgets.QWidget):
 
     # Нажатие кнопки
     def click_button(self):
-        self.unload_check(self.sender().text().replace("&", "").split(" / ")[0])
+        self.unload_check(
+            self.sender().text().replace("&", "").split(" / ")[0]
+        )
         self.sender().setVisible(False)
 
     # Возврат на главную страницу по таймеру
@@ -78,14 +88,8 @@ class Unloader(QtWidgets.QWidget):
     # Показать окно отметки
     def show_check_screen(self):
         self.mainWindow.stackedWidget.setCurrentIndex(1)
-        self.driver_name = get_driver(self.driver_id)[0]
-        self.mainWindow.successHeaderLabel.setText(
-            self.success_header.format(self.driver_name)
-        )
         self.mainWindow.successMiddleLabel.setText(
-            self.success_middle.format(datetime.now().strftime("%H:%M:%S"),
-                                       get_unload_send(self.trip_state[0])
-                                       )
+            self.success_middle.format(datetime.now().strftime("%H:%M:%S"))
         )
 
     # Записать в БД
@@ -97,10 +101,35 @@ class Unloader(QtWidgets.QWidget):
             self.unloader_id,
             QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
         )
+        self.show_check_screen()
+        self.return_timer.start()
 
     # Смена бригады выгрузчиков
     def change_unloaders(self):
-        print("change!")
+        self.unloader_rfid = self.mainWindow.lineEdit.text()
+        self.unloaders_info = get_unloaders(self.unloader_rfid)
+        if len(self.unloaders_info) > 0:
+            self.unloader_id = self.unloaders_info[0]
+            self.unload_id = self.unloaders_info[5]
+            for name, id in get_unloads().items():
+                if id == self.unload_id:
+                    self.unload_name = name
+            self.mainWindow.unloaderLabel.setText(
+                "<p>Пункт выгрузки: <strong>{}.&nbsp;</strong>Выгрузчики: <strong>{}, {}, {}, {}</strong></p>".format(
+                    self.unload_name,
+                    self.unloaders_info[1],
+                    self.unloaders_info[2],
+                    self.unloaders_info[3],
+                    self.unloaders_info[4]
+                )
+            )
+            self.mainWindow.stackedWidget.setCurrentIndex(0)
+            self.mainWindow.unloaderLabel.setVisible(True)
+            self.mainWindow.noUnloaderLabel.setVisible(False)
+        else:
+            self.mainWindow.stackedWidget.setCurrentIndex(2)
+            self.return_timer.start()
+        self.mainWindow.lineEdit.clear()
 
 
 if __name__ == '__main__':
