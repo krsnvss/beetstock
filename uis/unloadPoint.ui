@@ -229,7 +229,7 @@ QPushButton::hover{
         <item>
          <widget class="QLabel" name="unloaderLabel">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;***&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;p&gt;Пункт выгрузки: &lt;strong&gt;{}.&amp;nbsp;&lt;/strong&gt;Выгрузчики: &lt;strong&gt;{}, {}, {}, {}&lt;/strong&gt;&lt;/p&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

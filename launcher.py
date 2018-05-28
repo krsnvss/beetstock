@@ -64,7 +64,36 @@ class Launcher(QtWidgets.QWidget):
         _widget.move(self.widget_size.topLeft())
 
 
+# Авторизация
+class AuthForm(QtWidgets.QWidget):
+
+    def __init__(self):
+        super(AuthForm, self).__init__()
+        self.auth_dialog()
+
+    # Запрос авторизации для подключения к БД
+    def auth_dialog(self):
+        self.authForm = uic.loadUi("./uis/authForm.ui")
+        self.authForm.errorLabel.setVisible(False)
+        self.authForm.loginButton.clicked.connect(self.check_auth)
+        self.authForm.show()
+
+    # Проверка введенных логина и пароля
+    def check_auth(self):
+        db_user = self.authForm.loginEdit.text()
+        db_password = self.authForm.passEdit.text()
+        db.setUserName(db_user)
+        db.setPassword(db_password)
+        if db.open():
+            self.launcher = Launcher()
+            self.authForm.close()
+        else:
+            self.authForm.loginEdit.clear()
+            self.authForm.passEdit.clear()
+            self.authForm.errorLabel.setVisible(True)
+
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    _gui = Launcher()
+    _gui = AuthForm()
     sys.exit(app.exec_())
