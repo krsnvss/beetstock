@@ -430,5 +430,74 @@ def get_unloaders(rfid):
         _data.append(_query.value(5))
     return _data
 
-#from operators_gui.sql.db_connection import *
-#print(trip_status(1))
+
+# Получить список каждых n записей для направления на анализы
+def get_lab_line(ordinal, supplier, loadpoint, dt_start, dt_end):
+    _query = QSqlQuery('''
+    SELECT 
+    id
+    FROM
+        trips
+    WHERE
+        supplier = {} AND loadpoint = {}
+            AND arrival_dt BETWEEN '{}' AND '{}'
+    '''.format(
+        supplier,
+        loadpoint,
+        dt_start,
+        dt_end
+    ))
+    _data = []
+    row_number = 0
+    while _query.next():
+        if row_number % ordinal == 0:
+            _data.append(_query.value(0))
+        row_number += 1
+    return _data
+
+
+# Поставить номер пробы
+def create_sample():
+    insert_query = QSqlQuery('''INSERT INTO samples (refuse) values (0)''')
+
+
+# Получить номер пробы
+def get_sample_number():
+    select_query = QSqlQuery('''
+    SELECT 
+    id
+    FROM
+    samples
+    ORDER BY id DESC
+    LIMIT 1''')
+    last_sample = int()
+    while select_query.next():
+        last_sample = select_query.value(0)
+    return last_sample
+
+
+# Добавить номер пробы
+def set_sample_number(trip_id, sample_id):
+    update_query = QSqlQuery('''
+        UPDATE trips 
+        SET 
+        sample = {}
+        WHERE
+        id = {}'''.format(
+        sample_id,
+        trip_id
+    ))
+    print('''
+        UPDATE trips 
+        SET 
+        sample = {}
+        WHERE
+        id = {}'''.format(
+        sample_id,
+        trip_id
+    ))
+    return True
+
+from sql.db_connection import *
+create_sample()
+print(set_sample_number(1401, get_sample_number()))

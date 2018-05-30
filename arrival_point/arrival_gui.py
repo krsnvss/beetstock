@@ -4,6 +4,7 @@ import sys
 from PyQt5 import QtCore, QtWidgets, uic
 from sql.db_connection import *
 from sql.sql_queries import *
+from misc.dates import *
 
 
 # Основное окно
@@ -75,6 +76,24 @@ class ArrivalPoint(QtWidgets.QWidget):
                           0,
                           QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss'),
                           False)
+            self.trip_state = trip_status(self.driver_id)
+            if self.trip_state[1] == 1 or self.trip_state[1] == 2:
+                self.lab_line = get_lab_line(
+                    2,
+                    self.driver_info[2],
+                    self.loadpoint,
+                    shift_time(datetime.now())[0],
+                    shift_time(datetime.now())[1]
+                )
+                if len(self.lab_line) > 0:
+                    if (self.trip_state[0] in self.lab_line) or (self.trip_state[0] == self.lab_line[0]):
+                        print("to the laboratory!")
+                    else:
+                        print("good news, everyone! It's", self.trip_state[0], " of", self.lab_line)
+
+    # Направить на отбор пробы
+    def set_sample(self, trip_id):
+        pass
 
 
 if __name__ == '__main__':
