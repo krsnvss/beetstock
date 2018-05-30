@@ -88,12 +88,15 @@ class ArrivalPoint(QtWidgets.QWidget):
                 if len(self.lab_line) > 0:
                     if (self.trip_state[0] in self.lab_line) or (self.trip_state[0] == self.lab_line[0]):
                         print("to the laboratory!")
+                        create_sample()
+                        set_sample_number(self.trip_state[0], get_sample_number())
+                        self.mainWindow.successMiddleLabel.setText(
+                            self.mainWindow.successMiddleLabel.text() +
+                            "Вы был направлены на отбор пробы. Будьте внимательны при взвешивании брутто"
+                        )
+
                     else:
                         print("good news, everyone! It's", self.trip_state[0], " of", self.lab_line)
-
-    # Направить на отбор пробы
-    def set_sample(self, trip_id):
-        pass
 
 
 if __name__ == '__main__':

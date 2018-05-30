@@ -487,17 +487,7 @@ def set_sample_number(trip_id, sample_id):
         sample_id,
         trip_id
     ))
-    print('''
-        UPDATE trips 
-        SET 
-        sample = {}
-        WHERE
-        id = {}'''.format(
-        sample_id,
-        trip_id
-    ))
     return True
 
-from sql.db_connection import *
-create_sample()
-print(set_sample_number(1401, get_sample_number()))
+#from sql.db_connection import *
+
