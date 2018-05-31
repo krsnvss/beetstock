@@ -910,22 +910,37 @@ QTabBar::tab:right:!selected{
      <height>30</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>Файл</string>
-    </property>
-    <addaction name="addCard"/>
-    <addaction name="addTrip"/>
-    <addaction name="separator"/>
-    <addaction name="actionExit"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="addTrip"/>
+   <addaction name="separator"/>
+   <addaction name="addCard"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
+  </widget>
   <action name="addCard">
    <property name="icon">
     <iconset>
-     <normaloff>../../YandexDisk/Icons/add_card.png</normaloff>../../YandexDisk/Icons/add_card.png</iconset>
+     <normaloff>../res/if_credit-card_white.png</normaloff>../res/if_credit-card_white.png</iconset>
    </property>
    <property name="text">
     <string>Выдать карту</string>
@@ -938,6 +953,10 @@ QTabBar::tab:right:!selected{
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_log-out_white.png</normaloff>../res/if_log-out_white.png</iconset>
+   </property>
    <property name="text">
     <string>Выйти</string>
    </property>
@@ -971,6 +990,10 @@ QTabBar::tab:right:!selected{
    </property>
   </action>
   <action name="addTrip">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_plus-circle_white.png</normaloff>../res/if_plus-circle_white.png</iconset>
+   </property>
    <property name="text">
     <string>Новый рейс</string>
    </property>
