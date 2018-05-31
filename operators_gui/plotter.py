@@ -33,12 +33,12 @@ class Plotter(QThread):
             self.start_dt += timedelta(seconds=900)
         if not self.is_empty(self.counts):
             # Clear text files
-            with open("plot_data.txt", "w") as plot_txt:
+            with open("./operators_gui/plot_data.txt", "w") as plot_txt:
                 plot_txt.write('')
             for row in self.counts:
-                with open("plot_data.txt", "a") as plot_txt:
+                with open("./operators_gui/plot_data.txt", "a") as plot_txt:
                     plot_txt.write(row)
-            Popen("./plot_maker.sh")
+            Popen("./operators_gui/plot_maker.sh")
 
     def calculate_totals_by_supplier(self, supplier, shift):
         totals = []
@@ -60,10 +60,10 @@ class Plotter(QThread):
                 totals.append("{} {}\n".format(_hour,
                                                 int(_query.value(0))))
             start_dt += timedelta(seconds=3600)
-            with open("plot_data.txt", "w") as plot_txt:
+            with open("./operators_gui/plot_data.txt", "w") as plot_txt:
                 plot_txt.write('')
             for row in totals:
-                with open("plot_data.txt", "a") as plot_txt:
+                with open("./operators_gui/plot_data.txt", "a") as plot_txt:
                     plot_txt.write(row)
         return totals
 

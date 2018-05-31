@@ -69,13 +69,14 @@ class AuthForm(QtWidgets.QWidget):
 
     def __init__(self):
         super(AuthForm, self).__init__()
-        self.auth_dialog()
-
-    # Запрос авторизации для подключения к БД
-    def auth_dialog(self):
         self.authForm = uic.loadUi("./uis/authForm.ui")
+        self.authForm.passEdit.returnPressed.connect(self.check_auth)
+        self.authForm.passEdit.addAction(self.authForm.loginAction, 1)
+        self.authForm.loginAction.triggered.connect(self.check_auth)
         self.authForm.errorLabel.setVisible(False)
-        self.authForm.loginButton.clicked.connect(self.check_auth)
+        # Окно без заголовка
+        self.authForm.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        self.center(self.authForm)
         self.authForm.show()
 
     # Проверка введенных логина и пароля
@@ -91,6 +92,16 @@ class AuthForm(QtWidgets.QWidget):
             self.authForm.loginEdit.clear()
             self.authForm.passEdit.clear()
             self.authForm.errorLabel.setVisible(True)
+            self.authForm.statusBar.showMessage(
+                "Проверьте имя пользователя и пароль", 3000
+            )
+
+    # Показать окно по центру экрана
+    def center(self, _widget):
+        self.widget_size = _widget.frameGeometry()
+        self.display_center = QtWidgets.QDesktopWidget().availableGeometry().center()
+        self.widget_size.moveCenter(self.display_center)
+        _widget.move(self.widget_size.topLeft())
 
 
 if __name__ == '__main__':

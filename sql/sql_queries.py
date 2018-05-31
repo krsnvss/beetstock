@@ -206,8 +206,8 @@ def get_driver(driver_id_or_name):
     WHERE
         drivers.id = {}
             AND transport.id = drivers.transport
-            AND suppliers.id = drivers.employer'''
-                               .format(driver_id_or_name))
+            AND suppliers.id = drivers.employer'''.
+                           format(driver_id_or_name))
         _data = []
         while (_query.next()):
             _data.append(_query.value(0))
@@ -461,8 +461,8 @@ def create_sample():
     insert_query = QSqlQuery('''INSERT INTO samples (refuse) values (0)''')
 
 
-# Получить номер пробы
-def get_sample_number():
+# Получить номер последней пробы
+def get_last_sample_number():
     select_query = QSqlQuery('''
     SELECT 
     id
@@ -489,5 +489,25 @@ def set_sample_number(trip_id, sample_id):
     ))
     return True
 
+
+# Проверить нужно ли отправлять на пробу
+def get_sample_id(trip_id):
+    _query = QSqlQuery('''
+    SELECT
+    sample
+    FROM
+    trips
+    WHERE
+    id = {}
+    '''.format(
+        trip_id
+    ))
+    sample_id = 0
+    while _query.next():
+        sample_id = _query.value(0)
+    return sample_id
+
+
 #from sql.db_connection import *
+#print(get_sample_id(1))
 

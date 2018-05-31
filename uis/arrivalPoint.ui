@@ -252,6 +252,20 @@ QLabel{
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="sampleLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	background-color:rgb(35, 35, 35);
+	color:rgb(255, 255, 255);
+	font-weight:bold
+}</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Вы были отобраны для отбора пробы.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Отбор пробы производится во время взвешивания массы брутто.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>

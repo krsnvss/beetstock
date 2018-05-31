@@ -19,6 +19,7 @@ class ArrivalPoint(QtWidgets.QWidget):
         self.return_timer = QtCore.QTimer()
         self.return_timer.timeout.connect(self.return_to_input)
         self.return_timer.setInterval(10000)
+        self.mainWindow.sampleLabel.setVisible(False)
         # Сохранить текст, чтобы не потерять форматирование
         self.success_header = self.mainWindow.successHeaderLabel.text()
         self.success_middle = self.mainWindow.successMiddleLabel.text()
@@ -58,6 +59,7 @@ class ArrivalPoint(QtWidgets.QWidget):
     # Возврат на главную страницу по таймеру
     def return_to_input(self):
         self.mainWindow.stackedWidget.setCurrentIndex(0)
+        self.mainWindow.sampleLabel.setVisible(False)
         self.return_timer.stop()
 
     # Записать в БД
@@ -87,16 +89,9 @@ class ArrivalPoint(QtWidgets.QWidget):
                 )
                 if len(self.lab_line) > 0:
                     if (self.trip_state[0] in self.lab_line) or (self.trip_state[0] == self.lab_line[0]):
-                        print("to the laboratory!")
                         create_sample()
-                        set_sample_number(self.trip_state[0], get_sample_number())
-                        self.mainWindow.successMiddleLabel.setText(
-                            self.mainWindow.successMiddleLabel.text() +
-                            "Вы был направлены на отбор пробы. Будьте внимательны при взвешивании брутто"
-                        )
-
-                    else:
-                        print("good news, everyone! It's", self.trip_state[0], " of", self.lab_line)
+                        set_sample_number(self.trip_state[0], get_last_sample_number())
+                        self.mainWindow.sampleLabel.setVisible(True)
 
 
 if __name__ == '__main__':

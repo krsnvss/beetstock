@@ -42,6 +42,7 @@ class Scales(QtWidgets.QWidget):
             if self.trip_state[1] == 2:
                 self.check_weight('gross')
                 self.show_check_screen('gross')
+                self.send_to_lab()
             elif self.trip_state[1] == 3:
                 self.mainWindow.stackedWidget.setCurrentIndex(3)
                 self.mainWindow.errorMiddleLabel2.setText(
@@ -99,6 +100,13 @@ class Scales(QtWidgets.QWidget):
                      round(uniform(10.0, 50.0), 2),
                      QtCore.QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')
                      )
+
+    # Отправить сообщение в лабораторию
+    def send_to_lab(self):
+        if get_sample_id(self.trip_state[0]) > 0:
+            print("Quick! Do something! Make this manipulator move! This is sample", self.trip_state[0])
+        else:
+            print("Nothing to do. It's", self.trip_state[0])
 
 
 if __name__ == '__main__':
