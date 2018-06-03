@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>330</width>
+    <height>439</height>
+   </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::WheelFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#3a3b3a;
+	border-style: solid;
+	border-width:2px;
+}
+QLineEdit{
+	background-color:#ffffff;
+	color:#3a3b3a;
+	border-color:#3a3b3a;
+	border-style:solid;;
+	border-width:2px;
+	height:25px;
+	font:bold
+}
+QLineEdit::focus{
+	border-style:solid;
+	border-width:2px;
+	border-color:#54b0cb;
+}
+QLabel{
+	background-color:#3a3b3a;
+	border:2px solid #3a3b3a;
+}
+QGroupBox{
+	background-color:#448fa6;
+	color:#ffffff;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="2" column="0" rowspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Настройки подключения к БД</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Имя БД</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="dbName"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Хост</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="dbHost"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Пользователь</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="dbUser"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Пароль</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="dbPass">
+        <property name="echoMode">
+         <enum>QLineEdit::PasswordEchoOnEdit</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLineEdit" name="headerEdit">
+     <property name="styleSheet">
+      <string notr="true">QLineEdit{
+	background-color:#54b0cb;
+	color:#ffffff;
+	font:bold;
+	border-color:#54b0cb;
+}</string>
+     </property>
+     <property name="text">
+      <string>ПАРАМЕТРЫ</string>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Интервалы и задержки</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Интервал обновления таблиц (сек)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="tuSpinBox"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Время отображения сообщений (сек)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="mtSpinBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+  <action name="closeForm">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_x_white.png</normaloff>../res/if_x_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Закрыть</string>
+   </property>
+   <property name="toolTip">
+    <string>Закрыть форму редактирования рейса</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="saveChanges">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_save_white.png</normaloff>../res/if_save_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+   <property name="toolTip">
+    <string>Сохранить изменения</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

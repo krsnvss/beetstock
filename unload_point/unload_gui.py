@@ -5,6 +5,7 @@ from PyQt5 import QtCore, QtWidgets, uic, QtPrintSupport
 from datetime import datetime
 from sql.db_connection import *
 from sql.sql_queries import *
+from conf.parameters import table_update
 
 
 # Основное окно
@@ -17,7 +18,7 @@ class Unloader(QtWidgets.QWidget):
         self.layout = QtWidgets.QGridLayout()
         self.mainWindow.groupBox.setLayout(self.layout)
         # Загрузить настройки
-        self.update_interval = 5000
+        self.update_interval = table_update
         self.unload_id = 1
         self.unloader_id = 1
         # Установить таймеры:

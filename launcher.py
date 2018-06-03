@@ -2,6 +2,7 @@
 # Выбор интерфейса для работы
 import sys
 from PyQt5 import QtCore, QtSql, QtWidgets, uic
+from PyQt5.QtSql import QSqlDatabase, QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
 from arrival_point.arrival_gui import ArrivalPoint
 from operators_gui.operator_gui import OperatorApp
 from operators_gui.plotter import Plotter
@@ -10,13 +11,20 @@ from scales.scales_gui import Scales
 from unload_point.unload_gui import Unloader
 from sql.sql_queries import *
 from sql.db_connection import *
+from conf.parameters import *
+from configparser import ConfigParser
 
 
 class Launcher(QtWidgets.QWidget):
 
     def __init__(self):
         super(Launcher, self).__init__()
+        # Файл настроек
+        self.configuration = ConfigParser()
+        self.configuration.read('./conf/configuration.ini')
+        # Загрузить окно из ui файла
         self.launcher_window = uic.loadUi("./uis/launcher.ui")
+        # Привязать действия к кнопкам
         self.launcher_window.arrivalButton.clicked.connect(
             lambda: self.start_gui(ArrivalPoint())
         )
@@ -29,6 +37,8 @@ class Launcher(QtWidgets.QWidget):
         self.launcher_window.unloadButton.clicked.connect(
             lambda: self.start_gui(Unloader())
         )
+        # Окно настроек
+        self.launcher_window.changeParameters.triggered.connect(self.parameters)
         # Системный трей
         self.tray_icon = QtWidgets.QSystemTrayIcon(self)
         self.tray_icon.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_TitleBarMenuButton))
@@ -63,6 +73,42 @@ class Launcher(QtWidgets.QWidget):
         self.widget_size.moveCenter(self.display_center)
         _widget.move(self.widget_size.topLeft())
 
+    # Настройки
+    def parameters(self):
+        self.parametersForm = uic.loadUi("./uis/parameters.ui")
+        self.parametersForm.headerEdit.addAction(self.parametersForm.saveChanges, 1)
+        self.parametersForm.headerEdit.addAction(self.parametersForm.closeForm, 1)
+        self.parametersForm.saveChanges.triggered.connect(
+            self.save_config
+        )
+        self.parametersForm.closeForm.triggered.connect(
+            lambda: self.parametersForm.close()
+        )
+        self.parametersForm.tuSpinBox.setValue(table_update / 1000)
+        self.parametersForm.mtSpinBox.setValue(msg_time / 1000)
+        self.parametersForm.dbName.setText(db_name)
+        self.parametersForm.dbUser.setText(db_user)
+        self.parametersForm.dbPass.setText(db_password)
+        self.parametersForm.dbHost.setText(db_host)
+        self.center(self.parametersForm)
+        self.parametersForm.show()
+        
+    # Сохранить настройки
+    def save_config(self):
+        self.configuration['intervals']['table_update'] = str(
+            self.parametersForm.tuSpinBox.value() *1000
+        )
+        self.configuration['intervals']['msg_time'] = str(
+            self.parametersForm.mtSpinBox.value() * 1000
+        )
+        self.configuration['database']['db_name'] = self.parametersForm.dbName.text()
+        self.configuration['database']['db_user'] = self.parametersForm.dbUser.text()
+        self.configuration['database']['db_password'] = self.parametersForm.dbPass.text()
+        self.configuration['database']['db_host'] = self.parametersForm.dbHost.text()
+        with open('./conf/configuration.ini', 'w') as cfg:
+            self.configuration.write(cfg)
+        self.parametersForm.close()
+
 
 # Авторизация
 class AuthForm(QtWidgets.QWidget):
@@ -93,7 +139,7 @@ class AuthForm(QtWidgets.QWidget):
             self.authForm.passEdit.clear()
             self.authForm.errorLabel.setVisible(True)
             self.authForm.statusBar.showMessage(
-                "Проверьте имя пользователя и пароль", 3000
+                "Проверьте имя пользователя и пароль", msg_time
             )
 
     # Показать окно по центру экрана
@@ -106,5 +152,5 @@ class AuthForm(QtWidgets.QWidget):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    _gui = AuthForm()
+    _gui = Launcher()
     sys.exit(app.exec_())

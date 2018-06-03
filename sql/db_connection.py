@@ -1,11 +1,6 @@
 # Подключение к базе данных
 from PyQt5.QtSql import QSqlDatabase
-
-# База данных
-db_name = 'beetstock'
-db_user = 'operator'
-db_password = 'Password1!'
-db_host = 'localhost'
+from conf.parameters import db_host, db_name, db_password, db_user
 
 # Подключение к базе данных
 db = QSqlDatabase.addDatabase("QMYSQL")

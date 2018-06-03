@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>486</width>
-    <height>525</height>
+    <width>521</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,166 +23,27 @@
 	color:#ffffff;
 	border-color:#ffffff;
 }
-QTableView{
-	background-color:#ffffff;
-	alternate-background-color:#e2e2e2;
-	color:#3a3b3a;
-	border-style:solid;
-	border-color:#ffffff;
-	border-width:0px;
-	selection-color:#ffffff;
-	selection-background-color:#54b0cb;
-}
-QHeaderView::section{
-    background-color:#448fa6;
-	color:#ffffff;
-	font:bold;
-	height:40px;
-	border: #ffffff;
-	border-style:solid;
-	border-width:0px;
-}
-QComboBox{
-	background-color:#ffffff;
-	border-style:solid;
-	border-width:2px;
-	border-color:#ffffff;
-	color:#3a3b3a;
-	width:50px;
-	height:30px;
-	font:bold;
-	padding-left:5px
-}
-QComboBox QAbstractItemView {
-	background-color:#ffffff;
-	color:#3a3b3a;
-    border: 2px solid #ffffff;
-	padding-left:2px;
-	padding-right:2px;
-	padding-top:2px;
-	padding-bottom:2px
-}
-QComboBox::drop-down {
-   width: 24px;
-   border: 2px;
-}
-QComboBox::down-arrow {
-    image: url(&quot;./res/if_chevron-left.png&quot;);
-    width: 16px;
-    height: 16px;
-}
-QComboBox::down-arrow::hover {
-    image: url(&quot;./res/if_chevron-down.png&quot;);
-    width: 16px;
-    height: 16px;
-}
-QDateEdit{
-	background-color:#ffffff;
-	border-style:solid;
-	border-width:2px;
-	border-color:#ffffff;
-	color:#3a3b3a;
-	width:150px;
-	height:30px;
-	font:bold;
-	padding-left:5px
-}
-QDateEdit QAbstractItemView {
-	background-color:#ffffff;
-	color:#3a3b3a;;
-}
-QDateEdit::drop-down {
-   width: 24px;
-   border: 2px;
-}
-QDateEdit::down-arrow {
-    image: url(&quot;./res/if_chevron-left.png&quot;);
-    width: 16px;
-    height: 16px;
-}
-QDateEdit::down-arrow::hover {
-    image: url(&quot;./res/if_chevron-down.png&quot;);
-    width: 16px;
-    height: 16px;
-}
-QMenuBar{
-	background-color:#3a3b3a;
-	color:#ffffff;
-	selection-color:#54b0cb;
-	font:bold
-}
-QMenuBar::item::selected{
-	background-color:#54b0cb;
-	color:#ffffff;
-	font:bold;
-	padding-left:2px
-}
 QToolBar{
 	background-color:#3a3b3a;
 	color:#ffffff;
-}
-QMenu {
-	background-color:#3a3b3a;
-	color:#ffffff;
-	font:bold;
-	padding-left:2px;
-}
-QMenu::hover {
-    background-color: #448fa6;
-    color:#3a3b3a;
-	font:bold
-}
-QMenu::item {
-    background-color:#3a3b3a;
-	color:#ffffff;
-}
-QMenu::item::selected{
-	background-color:#54b0cb;
-	color:#ffffff;
-	padding-left:10px;
-}
-QTabWidget{
-	background-color:#3a3b3a;
-	color:#ffffff;
-	border-color:#ffffff;
-}
-QTabBar::tab:right:selected{
-    background-color:#448fa6;
-	color:#ffffff;
-	font:bold;
-	height:60px;
-	width: 30px;
-	border: #448fa6;
-	border-style:solid;
-	border-width:2px;
-}
-QTabBar::tab:right:!selected{
-    background-color:#3a3b3a;
-	color:#ffffff;
-	font:bold;
-	height:60px;
-	width: 30px;
-	border: #448fa6;
-	border-style:solid;
-	border-width:2px;
 }
 QLabel{
 	background-color:#448fa6;
 	color:#ffffff;
 	height:60px;
 	width: 30px;
-	border: #ffffff;
+	border: #448fa6;
 	border-style:solid;
-	border-width:5px;
+	border-width:2px;
 }
 QGroupBox{
 	background-color:#448fa6;
 	color:#ffffff;
 	height:60px;
 	width: 30px;
-	border: #ffffff;
+	border: #448fa6;
 	border-style:solid;
-	border-width:5px;
+	border-width:2px;
 }
 QPushButton{
 	background-color:#3a3b3a;
@@ -191,7 +52,7 @@ QPushButton{
 	width: 40px;
 	border: #ffffff;
 	border-style:solid;
-	border-width:5px;
+	border-width:2px;
 	font:14px;
 	font-weight: bold
 }
@@ -265,12 +126,23 @@ QPushButton::hover{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>486</width>
+     <width>521</width>
      <height>30</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="changeParameters"/>
+  </widget>
   <action name="showWindow">
    <property name="icon">
     <iconset>
@@ -305,6 +177,18 @@ QPushButton::hover{
    </property>
    <property name="toolTip">
     <string>Выйти из приложения</string>
+   </property>
+  </action>
+  <action name="changeParameters">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_settings_white.png</normaloff>../res/if_settings_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Настройки</string>
+   </property>
+   <property name="toolTip">
+    <string>Изменить настройки</string>
    </property>
   </action>
  </widget>

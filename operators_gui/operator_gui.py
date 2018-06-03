@@ -8,7 +8,7 @@ from sql.table_models import *
 from misc.labels import *
 from misc.checkers import *
 from misc.dates import *
-from misc.parameters import *
+from conf.parameters import table_update
 from operators_gui.plotter import Plotter
 from operators_gui.doc_print import DocPrinter, ThreadPrinter
 

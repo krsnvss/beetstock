@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1354</width>
+    <width>1392</width>
     <height>800</height>
    </rect>
   </property>
@@ -906,7 +906,7 @@ QTabBar::tab:right:!selected{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1354</width>
+     <width>1392</width>
      <height>30</height>
     </rect>
    </property>
@@ -923,13 +923,13 @@ QTabBar::tab:right:!selected{
     <set>Qt::AllToolBarAreas</set>
    </property>
    <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+    <enum>Qt::Vertical</enum>
    </property>
    <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
+    <enum>LeftToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="addTrip"/>
    <addaction name="separator"/>

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtSql import QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
 from PyQt5 import QtCore
-from sql.db_connection import *
+#from sql.db_connection import *
+
 
 # Модель таблицы "Рейсы"
 tripsModel = QSqlRelationalTableModel()

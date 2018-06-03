@@ -5,6 +5,7 @@ from PyQt5 import QtCore, QtWidgets, uic
 from sql.db_connection import *
 from sql.sql_queries import *
 from misc.dates import *
+from conf.parameters import msg_time
 
 
 # Основное окно
@@ -18,7 +19,7 @@ class ArrivalPoint(QtWidgets.QWidget):
         self.mainWindow.rfidInput.returnPressed.connect(self.read_rfid)
         self.return_timer = QtCore.QTimer()
         self.return_timer.timeout.connect(self.return_to_input)
-        self.return_timer.setInterval(10000)
+        self.return_timer.setInterval(msg_time)
         self.mainWindow.sampleLabel.setVisible(False)
         # Сохранить текст, чтобы не потерять форматирование
         self.success_header = self.mainWindow.successHeaderLabel.text()
