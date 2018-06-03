@@ -142,6 +142,7 @@ QPushButton::hover{
     <bool>false</bool>
    </attribute>
    <addaction name="changeParameters"/>
+   <addaction name="refsEdit"/>
   </widget>
   <action name="showWindow">
    <property name="icon">
@@ -189,6 +190,18 @@ QPushButton::hover{
    </property>
    <property name="toolTip">
     <string>Изменить настройки</string>
+   </property>
+  </action>
+  <action name="refsEdit">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_book_white.png</normaloff>../res/if_book_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Редактирование справочников</string>
+   </property>
+   <property name="toolTip">
+    <string>Редактирование справочников</string>
    </property>
   </action>
  </widget>

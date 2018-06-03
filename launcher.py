@@ -5,6 +5,7 @@ from PyQt5 import QtCore, QtSql, QtWidgets, uic
 from PyQt5.QtSql import QSqlDatabase, QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
 from arrival_point.arrival_gui import ArrivalPoint
 from operators_gui.operator_gui import OperatorApp
+from operators_gui.catalog import CatalogApp
 from operators_gui.plotter import Plotter
 from operators_gui.doc_print import DocPrinter, ThreadPrinter
 from scales.scales_gui import Scales
@@ -29,13 +30,16 @@ class Launcher(QtWidgets.QWidget):
             lambda: self.start_gui(ArrivalPoint())
         )
         self.launcher_window.operatorButton.clicked.connect(
-            lambda: self.start_gui(OperatorApp())
+            lambda: self.start_gui(AuthForm())
         )
         self.launcher_window.scaleButton.clicked.connect(
             lambda: self.start_gui(Scales())
         )
         self.launcher_window.unloadButton.clicked.connect(
             lambda: self.start_gui(Unloader())
+        )
+        self.launcher_window.refsEdit.triggered.connect(
+            lambda: self.start_gui(CatalogApp())
         )
         # Окно настроек
         self.launcher_window.changeParameters.triggered.connect(self.parameters)
@@ -132,7 +136,7 @@ class AuthForm(QtWidgets.QWidget):
         db.setUserName(db_user)
         db.setPassword(db_password)
         if db.open():
-            self.launcher = Launcher()
+            self.launcher = OperatorApp()
             self.authForm.close()
         else:
             self.authForm.loginEdit.clear()

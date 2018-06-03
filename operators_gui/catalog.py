@@ -8,10 +8,10 @@ from sql.table_models import driversModel
 from sql.sql_queries import get_driver
 
 
-class EditorApp(QtWidgets.QWidget):
+class CatalogApp(QtWidgets.QWidget):
 
     def __init__(self):
-        super(EditorApp, self).__init__()
+        super(CatalogApp, self).__init__()
         self.gui()
 
     def gui(self):
@@ -36,5 +36,5 @@ class EditorApp(QtWidgets.QWidget):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    _gui = EditorApp()
+    _gui = CatalogApp()
     sys.exit(app.exec_())

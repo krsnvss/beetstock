@@ -13,6 +13,194 @@
   <property name="windowTitle">
    <string>Редактор справочников</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTableView{
+	background-color:#ffffff;
+	alternate-background-color:#e2e2e2;
+	color:#3a3b3a;
+	border-style:solid;
+	border-color:#ffffff;
+	border-width:0px;
+	selection-color:#ffffff;
+	selection-background-color:#54b0cb;
+}
+QHeaderView::section{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:40px;
+	border: #ffffff;
+	border-style:solid;
+	border-width:0px;
+}
+QComboBox{
+	background-color:#ffffff;
+	border-color:#3a3b3a;
+	border-style:solid;;
+	border-width:2px;
+	color:#3a3b3a;
+	width:50px;
+	height:30px;
+	font:bold;
+	padding-left:5px
+}
+QComboBox QAbstractItemView {
+	background-color:#ffffff;
+	color:#3a3b3a;
+	border-color:#3a3b3a;
+	border-style:solid;;
+	border-width:2px;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;
+	padding-bottom:2px
+}
+QComboBox::drop-down {
+   width: 24px;
+   border: 2px;
+}
+QComboBox::down-arrow {
+    image: url(&quot;./res/if_chevron-left.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QComboBox::down-arrow::hover {
+    image: url(&quot;./res/if_chevron-down.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QDateEdit{
+	background-color:#ffffff;
+	border-style:solid;
+	border-width:2px;
+	border-color:#ffffff;
+	color:#3a3b3a;
+	width:150px;
+	height:30px;
+	font:bold;
+	padding-left:5px
+}
+QDateEdit QAbstractItemView {
+	background-color:#ffffff;
+	color:#3a3b3a;;
+}
+QDateEdit::drop-down {
+   width: 24px;
+   border: 2px;
+}
+QDateEdit::down-arrow {
+    image: url(&quot;./res/if_chevron-left.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QDateEdit::down-arrow::hover {
+    image: url(&quot;./res/if_chevron-down.png&quot;);
+    width: 16px;
+    height: 16px;
+}
+QMenuBar{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	selection-color:#54b0cb;
+	font:bold
+}
+QMenuBar::item::selected{
+	background-color:#54b0cb;
+	color:#ffffff;
+	font:bold;
+	padding-left:2px
+}
+QToolBar{
+	background-color:#3a3b3a;
+	color:#ffffff;
+}
+QMenu {
+	background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	padding-left:2px;
+}
+QMenu::hover {
+    background-color: #448fa6;
+    color:#3a3b3a;
+	font:bold
+}
+QMenu::item {
+    background-color:#3a3b3a;
+	color:#ffffff;
+}
+QMenu::item::selected{
+	background-color:#54b0cb;
+	color:#ffffff;
+	padding-left:10px;
+}
+QTabWidget{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	border-color:#ffffff;
+}
+QTabBar::tab:right:selected{
+    background-color:#448fa6;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QTabBar::tab:right:!selected{
+    background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	height:60px;
+	width: 30px;
+	border: #448fa6;
+	border-style:solid;
+	border-width:2px;
+}
+QLineEdit{
+	background-color:#ffffff;
+	color:#3a3b3a;
+	border-color:#3a3b3a;
+	border-style:solid;;
+	border-width:2px;
+	height:25px;
+	font:bold
+}
+QLineEdit::focus{
+	border-style:solid;
+	border-width:2px;
+	border-color:#54b0cb;
+}
+QPushButton{
+	background-color:#54b0cb;
+	color:#ffffff;
+	font:bold;
+	height:30px;
+	border-color:#54b0cb;
+}
+QPushButton::hover{
+	background-color:#448fa6;
+	border-color:#448fa6;
+}
+QPushButton::focus{
+	background-color:#448fa6;
+}
+QPushButton::pressed{
+	background-color:#3a3b3a;
+	color:#ffffff;
+	font:bold;
+	border-style:solid;
+	border-color:#ffffff;
+	border-width:2px;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -188,7 +376,7 @@
      <x>0</x>
      <y>0</y>
      <width>670</width>
-     <height>27</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>
