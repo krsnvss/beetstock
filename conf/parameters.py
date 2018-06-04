@@ -13,3 +13,6 @@ db_name = configuration['database']['db_name']
 db_user = configuration['database']['db_user']
 db_password = configuration['database']['db_password']
 db_host = configuration['database']['db_host']
+
+# Каталог для фотографий
+photo_dir = configuration['storage']['photo_dir']

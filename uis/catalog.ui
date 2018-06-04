@@ -234,10 +234,17 @@ QPushButton::pressed{
         <string>Водители</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="6" column="1">
-         <widget class="QComboBox" name="driverSuppliers"/>
+        <item row="7" column="0">
+         <widget class="QLineEdit" name="driverEmail">
+          <property name="placeholderText">
+           <string>Адрес эл. почты (e-mail)</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
-        <item row="10" column="0">
+        <item row="12" column="0">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -250,44 +257,17 @@ QPushButton::pressed{
           </property>
          </spacer>
         </item>
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="driverPhone">
-          <property name="inputMask">
-           <string>+7(999)999-99-99</string>
-          </property>
-          <property name="placeholderText">
-           <string>Номер телефона</string>
-          </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLineEdit" name="driverEmail">
-          <property name="placeholderText">
-           <string>Адрес эл. почты (e-mail)</string>
-          </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="8" column="0" colspan="2">
+        <item row="10" column="0" colspan="2">
          <widget class="QLineEdit" name="driverComment">
+          <property name="inputMethodHints">
+           <set>Qt::ImhLatinOnly|Qt::ImhLowercaseOnly</set>
+          </property>
+          <property name="inputMask">
+           <string/>
+          </property>
+          <property name="maxLength">
+           <number>120</number>
+          </property>
           <property name="placeholderText">
            <string>Комментарий</string>
           </property>
@@ -295,19 +275,6 @@ QPushButton::pressed{
            <bool>true</bool>
           </property>
          </widget>
-        </item>
-        <item row="10" column="2">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="0" column="0" colspan="3">
          <widget class="QTableView" name="driversTable">
@@ -322,8 +289,38 @@ QPushButton::pressed{
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QComboBox" name="driverTruck"/>
+        <item row="12" column="1">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="12" column="2">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="11" column="2">
+         <widget class="QPushButton" name="addPhoto">
+          <property name="text">
+           <string>Загрузить фото</string>
+          </property>
+         </widget>
         </item>
         <item row="2" column="0" colspan="2">
          <widget class="QLineEdit" name="driverName">
@@ -335,29 +332,47 @@ QPushButton::pressed{
           </property>
          </widget>
         </item>
-        <item row="9" column="0">
-         <widget class="QPushButton" name="driverSave">
-          <property name="text">
-           <string>Записать</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2" rowspan="7">
+        <item row="2" column="2" rowspan="9">
          <widget class="QLabel" name="driverPhoto">
           <property name="text">
            <string>TextLabel</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="9" column="2">
-         <widget class="QPushButton" name="addPhoto">
-          <property name="text">
-           <string>Загрузить фото</string>
+        <item row="4" column="0">
+         <widget class="QLineEdit" name="driverPhone">
+          <property name="inputMask">
+           <string>+7(999)999-99-99</string>
+          </property>
+          <property name="placeholderText">
+           <string>Номер телефона</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
           </property>
          </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="driverTruck"/>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLineEdit" name="driverEmployer"/>
+        </item>
+        <item row="11" column="1">
+         <widget class="QPushButton" name="driverSave">
+          <property name="text">
+           <string>Записать</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QLineEdit" name="driverRfid"/>
         </item>
        </layout>
       </widget>
@@ -381,15 +396,36 @@ QPushButton::pressed{
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="selectTruck">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_edit.png</normaloff>../res/if_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выбор транспорта</string>
+   </property>
+   <property name="toolTip">
+    <string>Выбор транспорта</string>
+   </property>
+  </action>
+  <action name="selectEmployer">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_edit.png</normaloff>../res/if_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выбор поставщика</string>
+   </property>
+   <property name="toolTip">
+    <string>Выбор поставщика</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>driverName</tabstop>
   <tabstop>driverPhone</tabstop>
   <tabstop>driverEmail</tabstop>
-  <tabstop>driverTruck</tabstop>
-  <tabstop>driverSuppliers</tabstop>
   <tabstop>driverComment</tabstop>
-  <tabstop>driverSave</tabstop>
   <tabstop>addPhoto</tabstop>
   <tabstop>driversTable</tabstop>
   <tabstop>tabWidget</tabstop>

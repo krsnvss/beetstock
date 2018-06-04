@@ -198,7 +198,8 @@ def get_driver(driver_id_or_name):
         drivers.phone,
         drivers.email,
         drivers.comment,
-        drivers.photo
+        drivers.photo,
+        drivers.rfid
     FROM
         drivers,
         transport,
@@ -218,6 +219,7 @@ def get_driver(driver_id_or_name):
             _data.append(_query.value(5))
             _data.append(_query.value(6))
             _data.append(_query.value(7))
+            _data.append(_query.value(8))
     return _data
 
 
@@ -508,6 +510,65 @@ def get_sample_id(trip_id):
     return sample_id
 
 
+# Записать водителя
+def set_driver(id, name, phone, email, comment, photo, transport, employer, rfid, insert):
+    if insert == True:
+        _query = QSqlQuery('''
+        insert into drivers 
+        (name, phone, email, comment, photo,transport, employer, rfid) 
+        values ('{}', '{}', '{}', '{}', {}, {}, {}, {})'''.format(
+            name, phone, email, comment, photo, transport, employer, rfid
+        )
+        )
+    else:
+         _query = QSqlQuery('''
+        update drivers 
+            set name = '{}',
+                phone = '{}',
+                email = '{}',
+                comment = '{}',
+                photo = {},
+                transport = {},
+                employer = {},
+                rfid = {}
+        where id = {}'''.format(
+            name, phone, email, comment, photo, transport, employer, rfid, id
+        )
+        )
+
+    return True
+
+
+# Получить фото по id
+def get_photo(id):
+    _query = QSqlQuery('''
+    SELECT
+    photo
+    FROM
+    photos
+    WHERE
+    id = {}
+    '''.format(id))
+    path_to_photo = ''
+    while _query.next():
+        path_to_photo = _query.value(0)
+    return path_to_photo
+
+# Добавить фото
+def add_photo(url):
+    _query = QSqlQuery('''
+    insert into photos (photo) values ('{}')'''.format(url))
+    select_query = QSqlQuery('''
+        SELECT 
+        id
+        FROM
+        photos
+        ORDER BY id DESC
+        LIMIT 1''')
+    last_photo = int()
+    while select_query.next():
+        last_photo = select_query.value(0)
+    return last_photo
 #from sql.db_connection import *
 #print(get_sample_id(1))
 
