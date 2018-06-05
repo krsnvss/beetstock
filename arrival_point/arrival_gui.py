@@ -2,11 +2,11 @@
 # Графический интерфейс терминала в точке отметки прибытия
 import sys
 from PyQt5 import QtCore, QtWidgets, uic
-from sql.db_connection import *
 from sql.sql_queries import *
 from misc.dates import *
+from misc.labels import arrival_success, arrival_error
 from conf.parameters import msg_time
-
+from speaker.speaker import Speaker
 
 # Основное окно
 class ArrivalPoint(QtWidgets.QWidget):
@@ -30,6 +30,8 @@ class ArrivalPoint(QtWidgets.QWidget):
         # При открытии окна, оно будет развернуто на всю доступную область
         self.mainWindow.setGeometry(QtWidgets.QDesktopWidget().availableGeometry())
         self.mainWindow.show()
+        # Синтез речи в отдельном потоке
+        self.speaker = Speaker()
 
     # Читать введенный номер карты
     def read_rfid(self):
@@ -40,12 +42,27 @@ class ArrivalPoint(QtWidgets.QWidget):
                 self.mainWindow.stackedWidget.setCurrentIndex(1)
                 self.driver_name = get_driver(self.driver_id)[0]
                 self.mainWindow.successHeaderLabel.setText(
-                    self.success_header.format(self.driver_name)
+                    self.success_header.format(
+                        "{} {}".format(
+                                self.driver_name.split(" ")[1],
+                                self.driver_name.split(" ")[2]
+                            )
+                    )
                 )
                 self.mainWindow.successMiddleLabel.setText(
                     self.success_middle.format(QtCore.QDateTime.currentDateTime().toString("hh:mm:ss"))
                 )
                 self.check_arrival()
+                with open('./speaker/speech.txt', 'w') as speech:
+                    speech.write(
+                        arrival_success.format(
+                            "{} {}".format(
+                                self.driver_name.split(" ")[1],
+                                self.driver_name.split(" ")[2]
+                            )
+                        )
+                    )
+                self.speaker.start()
             elif 1 < self.trip_state[1] < 5:
                 self.mainWindow.stackedWidget.setCurrentIndex(3)
                 self.mainWindow.errorMiddleLabel2.setText(
@@ -53,6 +70,9 @@ class ArrivalPoint(QtWidgets.QWidget):
                 )
         else:
             self.mainWindow.stackedWidget.setCurrentIndex(2)
+            with open('./speaker/speech.txt', 'w') as speech:
+                speech.write(arrival_error)
+            self.speaker.start()
         # Включить таймер для возврата на главную страницу
         self.return_timer.start()
         self.mainWindow.rfidInput.clear()
