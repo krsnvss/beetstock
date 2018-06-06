@@ -11,6 +11,7 @@ from operators_gui.doc_print import DocPrinter, ThreadPrinter
 from scales.scales_gui import Scales
 from unload_point.unload_gui import Unloader
 from sql.sql_queries import *
+from sql.table_models import *
 from sql.db_connection import *
 from conf.parameters import *
 from configparser import ConfigParser
@@ -55,12 +56,12 @@ class Launcher(QtWidgets.QWidget):
         self.launcher_window.closeWindow.triggered.connect(
             QtWidgets.qApp.quit
         )
-        self.tray_menu = QtWidgets.QMenu()
-        self.tray_menu.addAction(self.launcher_window.showWindow)
-        self.tray_menu.addAction(self.launcher_window.hideWindow)
-        self.tray_menu.addAction(self.launcher_window.closeWindow)
-        self.tray_icon.setContextMenu(self.tray_menu)
-        self.tray_icon.show()
+        # self.tray_menu = QtWidgets.QMenu()
+        # self.tray_menu.addAction(self.launcher_window.showWindow)
+        # self.tray_menu.addAction(self.launcher_window.hideWindow)
+        # self.tray_menu.addAction(self.launcher_window.closeWindow)
+        # self.tray_icon.setContextMenu(self.tray_menu)
+        # self.tray_icon.show()
         self.center(self.launcher_window)
         self.launcher_window.show()
 

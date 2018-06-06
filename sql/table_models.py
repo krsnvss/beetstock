@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtSql import QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
 from PyQt5 import QtCore
-#from sql.db_connection import *
+from sql.db_connection import *
 
 
 # Модель таблицы "Рейсы"
@@ -144,6 +144,8 @@ driversModel.setRelation(7, QSqlRelation('suppliers', 'id', 'full_name'))
 driversModel.setSort(0, QtCore.Qt.AscendingOrder)
 driversModel.setHeaderData(0, QtCore.Qt.Horizontal, "ID")
 driversModel.setHeaderData(1, QtCore.Qt.Horizontal, "Выгрузка")
+driversModel.setHeaderData(6, QtCore.Qt.Horizontal, "Автомобиль")
+driversModel.setHeaderData(7, QtCore.Qt.Horizontal, "Поставщик")
 driversModel.select()
 
 # Модель для таблицы "Пункты погрузки"
@@ -173,6 +175,7 @@ suppliersModel.setEditStrategy(QSqlTableModel.OnManualSubmit)
 suppliersModel.setSort(0, QtCore.Qt.AscendingOrder)
 suppliersModel.setRelation(3, QSqlRelation("regions", "id", "name"))
 suppliersModel.setHeaderData(0, QtCore.Qt.Horizontal, "ID")
-suppliersModel.setHeaderData(2, QtCore.Qt.Horizontal, "Наименование")
+suppliersModel.setHeaderData(1, QtCore.Qt.Horizontal, "Краткое наименование")
+suppliersModel.setHeaderData(2, QtCore.Qt.Horizontal, "Полное наименование")
 suppliersModel.setHeaderData(3, QtCore.Qt.Horizontal, "Район")
 suppliersModel.select()

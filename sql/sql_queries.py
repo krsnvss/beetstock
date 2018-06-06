@@ -224,13 +224,21 @@ def get_driver(driver_id_or_name):
 
 
 # Пункт погрузки
-def get_loadpoint(name):
-    _query = QSqlQuery("SELECT id FROM loadpoints WHERE name = '{}'"
-                       .format(name))
-    _data = []
-    while (_query.next()):
-        _data.append(_query.value(0))
-    return _data[0]
+def get_loadpoint(id_or_name):
+    if type(id_or_name) is str:
+        _query = QSqlQuery("SELECT id FROM loadpoints WHERE name = '{}'"
+                           .format(id_or_name))
+        _data = []
+        while _query.next():
+            _data.append(_query.value(0))
+        return _data[0]
+    elif type(id_or_name) is int:
+        _query = QSqlQuery("SELECT name FROM loadpoints WHERE id = {}"
+                           .format(id_or_name))
+        _data = []
+        while _query.next():
+            _data.append(_query.value(0))
+        return _data[0]
 
 
 # Пункт погрузки по умолчанию
@@ -272,13 +280,30 @@ def get_supplier(name):
     return _data[0]
 
 
-def get_supplier_name(id):
-    _query = QSqlQuery("SELECT name FROM suppliers WHERE id = '{}'"
-                       .format(id))
+# Получить полные сведения о поставщике
+def get_supplier_data(_id):
+    _query = QSqlQuery('''
+    SELECT 
+    name,
+    full_name,
+    email,
+    phone,
+    requisites,
+    transporter_only,
+    default_load
+    FROM
+    suppliers
+    WHERE id = {}'''.format(_id))
     _data = []
-    while (_query.next()):
+    while _query.next():
         _data.append(_query.value(0))
-    return _data[0]
+        _data.append(_query.value(1))
+        _data.append(_query.value(2))
+        _data.append(_query.value(3))
+        _data.append(_query.value(4))
+        _data.append(_query.value(5))
+        _data.append(_query.value(6))
+    return _data
 
 
 # Транспорт
@@ -553,6 +578,7 @@ def get_photo(id):
     while _query.next():
         path_to_photo = _query.value(0)
     return path_to_photo
+
 
 # Добавить фото
 def add_photo(url):

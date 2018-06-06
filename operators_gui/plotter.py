@@ -43,7 +43,7 @@ class Plotter(QThread):
     def calculate_totals_by_supplier(self, supplier, shift):
         totals = []
         start_dt = shift[0]
-        supplier_name = get_supplier_name(supplier)
+        supplier_name = get_supplier_data(supplier)[0]
         for _hour in range(1, 25):
             _query = QSqlQuery('''
             SELECT 

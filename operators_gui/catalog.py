@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import sys
-
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
 from sql.table_models import driversModel, trucksModel, suppliersModel
-from sql.sql_queries import get_driver, set_driver, get_supplier, get_transport, get_photo, add_photo
+from sql.sql_queries import get_driver, set_driver, get_supplier, get_transport, \
+    get_photo, add_photo, get_supplier_data, get_loadpoint
 
 
 class CatalogApp(QtWidgets.QWidget):
@@ -13,6 +13,7 @@ class CatalogApp(QtWidgets.QWidget):
     def __init__(self):
         super(CatalogApp, self).__init__()
         self.window = uic.loadUi('./uis/catalog.ui')
+        # Таблица "Водители"
         self.window.driversTable.setModel(driversModel)
         self.window.driversTable.resizeColumnsToContents()
         self.drivers_hidden_columns = [2, 3, 4, 5, 8]
@@ -20,8 +21,21 @@ class CatalogApp(QtWidgets.QWidget):
             self.window.driversTable.setColumnHidden(col, True)
         self.window.driversTable.doubleClicked.connect(
             lambda: self.driver_table_click())
+        # Таблица "Поставщики"
+        self.window.suppliersTable.setModel(suppliersModel)
+        self.suppliers_hidden_columns = [3, 4, 5, 6, 7, 8]
+        for col in self.suppliers_hidden_columns:
+            self.window.suppliersTable.setColumnHidden(col, True)
+        self.window.suppliersTable.setColumnWidth(0, 50)
+        self.window.suppliersTable.setColumnWidth(1, 160)
+        self.window.suppliersTable.setColumnWidth(2, 170)
+        self.window.suppliersTable.doubleClicked.connect(
+            self.supplier_table_click
+        )
+        # Значения по умолчанию
         self.selected_id = 0
         self.driver_photo = 1
+        # Подключить действия к кнопкам
         self.window.driverSave.clicked.connect(self.save_driver)
         self.window.driverTruck.addAction(
             self.window.selectTruck, 1
@@ -76,6 +90,7 @@ class CatalogApp(QtWidgets.QWidget):
                    get_supplier(self.window.driverEmployer.text()),
                    self.window.driverRfid.text(),
                    self.insert)
+        self.clear_edits()
         driversModel.select()
 
     # Выбор поставщика
@@ -144,6 +159,44 @@ class CatalogApp(QtWidgets.QWidget):
                                           QtCore.Qt.KeepAspectRatio,
                                           QtCore.Qt.SmoothTransformation)
             )
+
+    # Очистка полей ввода
+    def clear_edits(self):
+        self.window.driverName.clear()
+        self.window.driverTruck.clear()
+        self.window.driverPhone.clear()
+        self.window.driverEmail.clear()
+        self.window.driverEmployer.clear()
+        self.window.driverComment.clear()
+        self.window.driverRfid.clear()
+        self.window.driverPhoto.clear()
+        self.window.supplierName.clear()
+        self.window.supplierFullName.clear()
+        self.window.supplierEmail.clear()
+        self.window.supplierPhone.clear()
+        self.window.supplierReq.clear()
+        self.window.defaultLoad.clear()
+        self.window.transporterOnly.setCheckState(0)
+        self.selected_id = 0
+
+    # Двойной щелчок по таблице поставщики
+    def supplier_table_click(self):
+        self.supplier_id = [self.window.suppliersTable.model().data(index)
+                            for index in self.window.suppliersTable.selectedIndexes()][0]
+        self.supplier_data = get_supplier_data(self.supplier_id)
+        self.window.supplierName.setText(self.supplier_data[0])
+        self.window.supplierFullName.setText(self.supplier_data[1])
+        self.window.supplierEmail.setText(self.supplier_data[2])
+        self.window.supplierPhone.setText(self.supplier_data[3])
+        self.window.supplierReq.setText(self.supplier_data[4])
+        self.window.defaultLoad.setText(
+            get_loadpoint(
+                self.supplier_data[6]
+            )
+        )
+        self.window.transporterOnly.setCheckState(
+            self.supplier_data[5]
+        )
 
 
 if __name__ == '__main__':
