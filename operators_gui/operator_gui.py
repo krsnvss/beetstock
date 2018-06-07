@@ -292,17 +292,17 @@ class OperatorApp(QtWidgets.QWidget):
     def selector_double_click(self, selector_id):
         if selector_id == 0:
             self.selected_load = [self.loadSelect.refTable.model().data(index)
-                                for index in self.loadSelect.refTable.selectedIndexes()][1]
+                                  for index in self.loadSelect.refTable.selectedIndexes()][1]
             self.editForm.loadEdit.setText(self.selected_load)
             self.loadSelect.close()
         elif selector_id == 1:
             self.selected_truck = [self.truckSelect.refTable.model().data(index)
-                                for index in self.truckSelect.refTable.selectedIndexes()][1]
+                                   for index in self.truckSelect.refTable.selectedIndexes()][1]
             self.cardForm.truckEdit.setText(self.selected_truck)
             self.truckSelect.close()
         elif selector_id == 2:
             self.selected_supplier = [self.supplierSelect.refTable.model().data(index)
-                                for index in self.supplierSelect.refTable.selectedIndexes()][1]
+                                      for index in self.supplierSelect.refTable.selectedIndexes()][1]
             self.cardForm.supEdit.setText(self.selected_supplier)
             self.supplierSelect.close()
 
@@ -426,8 +426,7 @@ class OperatorApp(QtWidgets.QWidget):
     # Печать документа
     def print_doc(self, trip_id):
         self.trip_id = trip_id
-        self.printer = ThreadPrinter()
-        self.printer.run(self.trip_id)
+        self.printer = DocPrinter(self.trip_id)
         self.editForm.close()
 
 

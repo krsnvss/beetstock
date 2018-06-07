@@ -3,9 +3,9 @@
 
 import sys
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
-from sql.table_models import driversModel, trucksModel, suppliersModel
+from sql.table_models import driversModel, loadsModel, trucksModel, suppliersModel
 from sql.sql_queries import get_driver, set_driver, get_supplier, get_transport, \
-    get_photo, add_photo, get_supplier_data, get_loadpoint
+    get_photo, add_photo, get_supplier_data, get_loadpoint, set_supplier
 
 
 class CatalogApp(QtWidgets.QWidget):
@@ -34,6 +34,7 @@ class CatalogApp(QtWidgets.QWidget):
         )
         # Значения по умолчанию
         self.selected_id = 0
+        self.supplier_id = 0
         self.driver_photo = 1
         # Подключить действия к кнопкам
         self.window.driverSave.clicked.connect(self.save_driver)
@@ -46,6 +47,13 @@ class CatalogApp(QtWidgets.QWidget):
         self.window.selectEmployer.triggered.connect(self.select_employer)
         self.window.selectTruck.triggered.connect(self.select_truck)
         self.window.addPhoto.clicked.connect(self.choose_photo)
+        self.window.defaultLoad.addAction(
+            self.window.selectLoad, 1
+        )
+        self.window.selectLoad.triggered.connect(self.select_loadpoint)
+        self.window.supplierSave.clicked.connect(self.save_supplier)
+        self.window.clearButton.clicked.connect(self.clear_edits)
+        self.window.clearButton_2.clicked.connect(self.clear_edits)
         self.center(self.window)
         self.window.show()
 
@@ -93,6 +101,25 @@ class CatalogApp(QtWidgets.QWidget):
         self.clear_edits()
         driversModel.select()
 
+    # Выбрать пункт погрузки
+    def select_loadpoint(self):
+        self.loadSelect = uic.loadUi("./uis/selector.ui")
+        self.loadSelect.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        self.loadSelect.refTable.setModel(loadsModel)
+        self.center(self.loadSelect)
+        self.loadSelect.refTable.setColumnHidden(3, True)
+        self.loadSelect.refTable.setColumnHidden(4, True)
+        self.loadSelect.refTable.setColumnWidth(0, 50)
+        self.loadSelect.refTable.setColumnWidth(1, 120)
+        self.loadSelect.refTable.setColumnWidth(2, 120)
+        # Подключить действие к полю ввода
+        self.loadSelect.searchEdit.textChanged.connect(
+            lambda: self.set_filter(loadsModel))
+        # Действие по двойному клику
+        self.loadSelect.refTable.doubleClicked.connect(
+            lambda: self.selector_double_click(0))
+        self.loadSelect.show()
+
     # Выбор поставщика
     def select_employer(self):
         self.supplierSelect = uic.loadUi("./uis/selector.ui")
@@ -134,7 +161,12 @@ class CatalogApp(QtWidgets.QWidget):
 
     # Действие по двойному клику. Таблица "Пункты погрузки"
     def selector_double_click(self, selector_id):
-        if selector_id == 1:
+        if selector_id == 0:
+            self.selected_load = [self.loadSelect.refTable.model().data(index)
+                                for index in self.loadSelect.refTable.selectedIndexes()][1]
+            self.window.defaultLoad.setText(self.selected_load)
+            self.loadSelect.close()
+        elif selector_id == 1:
             self.selected_truck = [self.truckSelect.refTable.model().data(index)
                                 for index in self.truckSelect.refTable.selectedIndexes()][1]
             self.window.driverTruck.setText(self.selected_truck)
@@ -178,6 +210,7 @@ class CatalogApp(QtWidgets.QWidget):
         self.window.defaultLoad.clear()
         self.window.transporterOnly.setCheckState(0)
         self.selected_id = 0
+        self.supplier_id = 0
 
     # Двойной щелчок по таблице поставщики
     def supplier_table_click(self):
@@ -197,6 +230,26 @@ class CatalogApp(QtWidgets.QWidget):
         self.window.transporterOnly.setCheckState(
             self.supplier_data[5]
         )
+
+    # Сохранить поставщика
+    def save_supplier(self):
+        if self.supplier_id == 0:
+            self.insert = True
+        else:
+            self.insert = False
+        set_supplier(self.supplier_id,
+                     self.window.supplierName.text().upper(),
+                     self.window.supplierFullName.text(),
+                     self.window.supplierPhone.text(),
+                     self.window.supplierEmail.text(),
+                     self.window.supplierReq.text(),
+                     self.window.transporterOnly.checkState(),
+                     get_loadpoint(
+                         self.window.defaultLoad.text()
+                     ),
+                     self.insert
+                     )
+        self.clear_edits()
 
 
 if __name__ == '__main__':

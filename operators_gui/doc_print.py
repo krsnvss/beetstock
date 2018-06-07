@@ -17,7 +17,7 @@ class DocPrinter(QtWidgets.QWidget):
 
     def invoice_print(self):
         self.preview.closeAction.triggered.connect(lambda:
-            self.preview.close())
+            self.preview.destroy())
         # Получить данные для ТТН
         self.trip_data = get_data(self.trip_id)
         with open("./rep/invoice_template.html", 'r') as inv_template:

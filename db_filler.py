@@ -113,4 +113,4 @@ for x in range(100):
     fill_with_completed()
     sleep(5)
     c += 1
-    print(c, " records inserted", end='\r')
+    print(c, " records inserted")

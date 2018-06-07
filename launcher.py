@@ -4,6 +4,7 @@ import sys
 from PyQt5 import QtCore, QtSql, QtWidgets, uic
 from PyQt5.QtSql import QSqlDatabase, QSqlRelation, QSqlRelationalTableModel, QSqlTableModel
 from arrival_point.arrival_gui import ArrivalPoint
+from laboratory.laboratory_gui import LaboratoryApp
 from operators_gui.operator_gui import OperatorApp
 from operators_gui.catalog import CatalogApp
 from operators_gui.plotter import Plotter
@@ -38,6 +39,9 @@ class Launcher(QtWidgets.QWidget):
         )
         self.launcher_window.unloadButton.clicked.connect(
             lambda: self.start_gui(Unloader())
+        )
+        self.launcher_window.laboratoryButton.clicked.connect(
+            lambda: self.start_gui(LaboratoryApp())
         )
         self.launcher_window.refsEdit.triggered.connect(
             lambda: self.start_gui(CatalogApp())

@@ -306,6 +306,33 @@ def get_supplier_data(_id):
     return _data
 
 
+# Записать водителя
+def set_supplier(_id, name, full_name, phone, email, requisites, transporter_only, default_load, insert):
+    if insert:
+         _query = QSqlQuery('''
+        insert into suppliers 
+        (name, full_name. phone, email, requisites, transporter_only, default_load) 
+        values ('{}', '{}', '{}', '{}', '{}', {}, {})'''.format(
+            name, full_name, phone, email, requisites, transporter_only, default_load
+        )
+        )
+    else:
+         _query = QSqlQuery('''
+        update suppliers
+            set name = '{}',
+                full_name = '{}',
+                phone = '{}',
+                email = '{}',
+                requisites = '{}',
+                transporter_only = {},
+                default_load = {}
+        where id = {}'''.format(
+             name, full_name, phone, email, requisites, transporter_only, default_load, _id
+        )
+        )
+    return True
+
+
 # Транспорт
 def get_transport(name):
     _query = QSqlQuery("SELECT id FROM transport WHERE plate = '{}'"
@@ -535,9 +562,33 @@ def get_sample_id(trip_id):
     return sample_id
 
 
+# Получить данные по пробе
+def get_sample_data(_id):
+    _query = QSqlQuery('''
+    SELECT
+    refuse,
+    polarisation,
+    k,
+    n,
+    an
+    FROM
+    samples
+    WHERE
+    id = {}
+    '''.format(_id))
+    _data = []
+    while _query.next():
+        _data.append(_query.value(0))
+        _data.append(_query.value(1))
+        _data.append(_query.value(2))
+        _data.append(_query.value(3))
+        _data.append(_query.value(4))
+    return _data
+
+
 # Записать водителя
-def set_driver(id, name, phone, email, comment, photo, transport, employer, rfid, insert):
-    if insert == True:
+def set_driver(_id, name, phone, email, comment, photo, transport, employer, rfid, insert):
+    if insert:
         _query = QSqlQuery('''
         insert into drivers 
         (name, phone, email, comment, photo,transport, employer, rfid) 
@@ -557,7 +608,7 @@ def set_driver(id, name, phone, email, comment, photo, transport, employer, rfid
                 employer = {},
                 rfid = {}
         where id = {}'''.format(
-            name, phone, email, comment, photo, transport, employer, rfid, id
+            name, phone, email, comment, photo, transport, employer, rfid, _id
         )
         )
 
