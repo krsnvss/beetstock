@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # Графический интерфейс лаборанта
 import sys
-from PyQt5 import QtCore, QtWidgets, uic
+from PyQt5 import QtGui, QtCore, QtWidgets, uic
 from sql.sql_queries import *
 from sql.table_models import samplesModel
+from misc.dates import day_shift
 
 
 class LaboratoryApp(QtWidgets.QWidget):
@@ -16,9 +17,18 @@ class LaboratoryApp(QtWidgets.QWidget):
         self.window.mainTable.setColumnWidth(0, 50)
         self.window.mainTable.setColumnWidth(1, 120)
         self.window.mainTable.setColumnWidth(2, 120)
+        self.window.mainTable.setColumnWidth(3, 50)
+        self.window.mainTable.setColumnWidth(4, 50)
+        self.window.mainTable.setColumnWidth(5, 50)
+        self.window.mainTable.setColumnWidth(6, 150)
         # Значения по умолчанию
         self.selected_sample = 0
-        #  Отцентровать и показать окно
+        # Установить текущую дату
+        self.window.dateEdit.setDate(QtCore.QDate.currentDate())
+        self.window.dateEdit.dateChanged.connect(self.date_changed)
+        # Переключатель режима редактирования
+        self.window.editSwitch.stateChanged.connect(self.edit_mode_change)
+        # Отцентровать и показать окно
         self.center(self.window)
         self.window.show()
 
@@ -37,9 +47,27 @@ class LaboratoryApp(QtWidgets.QWidget):
         # TODO: добавить отображение подробностей  по пробе, включая имя поставщика в qlabel
         # добавить форму редактирования (ползунок править таблицу,
         # который переключает edittriggers maintable)
-        
 
+    # Обновить таблицу и графики
+    def table_update(self):
+        if self.window.mainTable.model() is not None:
+            self.window.mainTable.model().select()
 
+    # Действие по смене даты
+    def date_changed(self):
+        self.shift = day_shift(self.window.dateEdit.date().toPyDate())
+        samplesModel.setFilter("sample_dt between '{}' and '{}'".
+                               format(self.shift[0], self.shift[1]))
+        self.table_update()
+
+    # Переключатель
+    def edit_mode_change(self):
+        if self.window.editSwitch.isChecked():
+            self.window.mainTable.setSelectionBehavior(0)
+            self.window.mainTable.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
+        else:
+            self.window.mainTable.setSelectionBehavior(1)
+            self.window.mainTable.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
 
 
 if __name__ == '__main__':
