@@ -220,7 +220,7 @@ class CatalogApp(QtWidgets.QWidget):
         self.window.supplierName.setText(self.supplier_data[0])
         self.window.supplierFullName.setText(self.supplier_data[1])
         self.window.supplierEmail.setText(self.supplier_data[2])
-        self.window.supplierPhone.setText(self.supplier_data[3])
+        self.window.supplierPhone.setText(str(self.supplier_data[3]))
         self.window.supplierReq.setText(self.supplier_data[4])
         self.window.defaultLoad.setText(
             get_loadpoint(

@@ -646,6 +646,51 @@ def add_photo(url):
     while select_query.next():
         last_photo = select_query.value(0)
     return last_photo
-#from sql.db_connection import *
-#print(get_sample_id(1))
 
+
+# Получить данные по хозяйствам для отчета
+def get_daily_totals(_date):
+    sup_query = QSqlQuery('''
+    SELECT DISTINCT
+    supplier
+    FROM
+    trips
+    WHERE
+    tare_dt BETWEEN '{}' AND '{}'
+    '''.format(
+        _date[0],
+        _date[1]
+    )
+    )
+    _suppliers = []
+    while sup_query.next():
+        _suppliers.append(sup_query.value(0))
+    _totals = []
+    for item in _suppliers:
+        sup_totals = []
+        _query = QSqlQuery('''
+        SELECT
+        suppliers.name,
+        COUNT(trips.id),
+        SUM(trips.net_weight),
+        SUM(trips.clear_weight)
+        FROM
+        suppliers,
+        trips
+        WHERE
+        suppliers.id = trips.supplier
+        AND tare_dt BETWEEN '{}' AND '{}'
+        AND supplier = {}
+        '''.format(
+            _date[0],
+            _date[1],
+            item
+            )
+        )
+        while _query.next():
+            sup_totals.append(_query.value(0))
+            sup_totals.append(_query.value(1))
+            sup_totals.append(_query.value(2))
+            sup_totals.append(_query.value(3))
+        _totals.append(sup_totals)
+    return _totals

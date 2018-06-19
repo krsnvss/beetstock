@@ -39,6 +39,11 @@ class OperatorApp(QtWidgets.QWidget):
         self.window.actionExit.triggered.connect(QtWidgets.QApplication.quit)
         self.window.addCard.triggered.connect(self.add_new_card)
         self.window.addTrip.triggered.connect(self.edit_new_trip)
+        self.window.actionPrint.triggered.connect(
+            lambda: self.print_report(
+                self.window.dateEdit.date().toPyDate()
+            )
+        )
         # Установка текущей даты в поле выбора
         self.window.dateEdit.setDate(QtCore.QDate.currentDate())
         self.window.dateEdit.setVisible(False)
@@ -426,8 +431,16 @@ class OperatorApp(QtWidgets.QWidget):
     # Печать документа
     def print_doc(self, trip_id):
         self.trip_id = trip_id
-        self.printer = DocPrinter(self.trip_id)
+        self.printer = DocPrinter()
+        self.printer.invoice_print(self.trip_id)
         self.editForm.close()
+
+    # Печать отчета
+    def print_report(self, _date):
+        self.printer = DocPrinter()
+        self.printer.common_report(
+            day_shift(_date)
+        )
 
 
 if __name__ == '__main__':

@@ -935,7 +935,9 @@ QTabBar::tab:right:!selected{
    <addaction name="separator"/>
    <addaction name="addCard"/>
    <addaction name="separator"/>
+   <addaction name="actionPrint"/>
    <addaction name="actionExit"/>
+   <addaction name="separator"/>
   </widget>
   <action name="addCard">
    <property name="icon">
@@ -1014,6 +1016,18 @@ QTabBar::tab:right:!selected{
    </property>
    <property name="toolTip">
     <string>Распечатать ТТН</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset>
+     <normaloff>../res/if_printer_white.png</normaloff>../res/if_printer_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>Печать отчетов</string>
+   </property>
+   <property name="toolTip">
+    <string>Печать отчетов</string>
    </property>
   </action>
  </widget>

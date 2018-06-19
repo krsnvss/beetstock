@@ -9,13 +9,14 @@ from sql.sql_queries import *
 
 class DocPrinter(QtWidgets.QWidget):
 
-    def __init__(self, trip_id):
-        self.trip_id = trip_id
+    def __init__(self):
         super(DocPrinter, self).__init__()
         self.preview = uic.loadUi('./uis/report.ui')
-        self.invoice_print()
+        self.preview.printAction.triggered.connect(self.printer)
+        # self.invoice_print()
 
-    def invoice_print(self):
+    def invoice_print(self, trip_id):
+        self.trip_id = trip_id
         self.preview.closeAction.triggered.connect(lambda:
             self.preview.destroy())
         # Получить данные для ТТН
@@ -38,8 +39,41 @@ class DocPrinter(QtWidgets.QWidget):
             self.trip_data[17],
         )
                                      )
-        self.preview.printAction.triggered.connect(self.printer)
+        # self.preview.printAction.triggered.connect(self.printer)
         self.preview.show()
+
+    def common_report(self, _date):
+        self._date = _date
+        self.totals = get_daily_totals(self._date)
+        with open("./rep/daily_totals.html", 'r') as _template:
+            self.template = _template.read()
+        with open("./rep/daily_totals_odd_row.html", 'r') as _template:
+            self.odd_row_template = _template.read()
+        with open("./rep/daily_totals_even_row.html", 'r') as _template:
+            self.even_row_template = _template.read()
+        self.rows = ''
+        self.row_num = 1
+        for item in self.totals:
+            print(item)
+            if (self.row_num % 2) == 0:
+                self.row_template = self.even_row_template
+            else:
+                self.row_template = self.odd_row_template
+            self.rows += self.row_template.format(
+                item[0],
+                item[1],
+                item[2],
+                item[3]
+            )
+            self.row_num += 1
+            print(self.rows)
+        self.preview.webView.setHtml(
+            self.template.format(
+                self.rows
+            )
+        )
+        self.preview.show()
+
 
     def printer(self):
         self.print_dialog = QtPrintSupport.QPrintDialog()
