@@ -32,7 +32,8 @@ class Launcher(QtWidgets.QWidget):
             lambda: self.start_gui(ArrivalPoint())
         )
         self.launcher_window.operatorButton.clicked.connect(
-            lambda: self.start_gui(AuthForm())
+            # lambda: self.start_gui(AuthForm())
+            lambda: self.start_gui(OperatorApp())
         )
         self.launcher_window.scaleButton.clicked.connect(
             lambda: self.start_gui(Scales())
@@ -60,12 +61,12 @@ class Launcher(QtWidgets.QWidget):
         self.launcher_window.closeWindow.triggered.connect(
             QtWidgets.qApp.quit
         )
-        # self.tray_menu = QtWidgets.QMenu()
-        # self.tray_menu.addAction(self.launcher_window.showWindow)
-        # self.tray_menu.addAction(self.launcher_window.hideWindow)
-        # self.tray_menu.addAction(self.launcher_window.closeWindow)
-        # self.tray_icon.setContextMenu(self.tray_menu)
-        # self.tray_icon.show()
+        self.tray_menu = QtWidgets.QMenu()
+        self.tray_menu.addAction(self.launcher_window.showWindow)
+        self.tray_menu.addAction(self.launcher_window.hideWindow)
+        self.tray_menu.addAction(self.launcher_window.closeWindow)
+        self.tray_icon.setContextMenu(self.tray_menu)
+        self.tray_icon.show()
         self.center(self.launcher_window)
         self.launcher_window.show()
 

@@ -230,6 +230,7 @@ class OperatorApp(QtWidgets.QWidget):
         self.plotter.start()
         self.window.tripChartLabel.setPixmap(QtGui.QPixmap("./res/plot_count.png"))
         self.window.tonnChartLabel.setPixmap(QtGui.QPixmap("./res/plot_sum.png"))
+        # self.make_chart()
 
     # Прочитать карту водителя
     def read_rfid(self, _action):
@@ -441,6 +442,34 @@ class OperatorApp(QtWidgets.QWidget):
         self.printer.common_report(
             day_shift(_date)
         )
+
+    # Построить график
+    # def make_chart(self):
+    #     self.series = QtChart.QLineSeries()
+    #     self.shift = shift_time(self.window.dateEdit.date().toPyDate())
+    #     self.sums = []
+    #     self.counts = []
+    #     self.start_dt = self.shift[0]
+    #     for step in range(96):
+    #         _query = QSqlQuery('''
+    #                 SELECT
+    #                 COUNT(*) AS sup, SUM(net_weight)
+    #             FROM
+    #                 trips
+    #             WHERE
+    #                 tare_dt BETWEEN '{}' AND '{}'
+    #                 '''.format(self.start_dt,
+    #                            self.start_dt + timedelta(seconds=900)))
+    #         while _query.next():
+    #             self.counts.append(int(_query.value(0)))
+    #             self.sums.append(int(_query.value(1)))
+    #         self.start_dt += timedelta(seconds=900)
+    #     if len(self.counts) > 0:
+    #         self.series.append(self.counts)
+    #         self.window.tripChart.addSeries(self.series)
+    #         self.window.tripChart.setAnimationOptions(QtChart.QChart.SeriesAnimations)
+    #         self.window.tripChart.createDefaultAxis()
+
 
 
 if __name__ == '__main__':

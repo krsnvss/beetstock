@@ -184,10 +184,10 @@ QCheckBox::indicator {
     height: 36px;
 }
 QCheckBox::indicator:unchecked {
-    image: url(&quot;/home/krsnvss/PycharmProjects/beetstock/res/if_toggle-left_white.png&quot;);
+    image: url(&quot;./res/if_toggle-left_white.png&quot;);
 }
 QCheckBox::indicator:checked {
-    image: url(&quot;/home/krsnvss/PycharmProjects/beetstock/res/if_toggle-right_blue.png&quot;);
+    image: url(&quot;./res/if_toggle-right_white.png&quot;);
 }
 </string>
   </property>
@@ -584,7 +584,7 @@ QCheckBox::indicator:checked {
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
   </widget>

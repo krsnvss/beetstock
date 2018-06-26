@@ -54,7 +54,6 @@ class DocPrinter(QtWidgets.QWidget):
         self.rows = ''
         self.row_num = 1
         for item in self.totals:
-            print(item)
             if (self.row_num % 2) == 0:
                 self.row_template = self.even_row_template
             else:
@@ -62,13 +61,15 @@ class DocPrinter(QtWidgets.QWidget):
             self.rows += self.row_template.format(
                 item[0],
                 item[1],
-                item[2],
-                item[3]
+                round(item[2], 2),
+                round(item[3], 2),
+                round((1-(item[3] / item[2]))*100, 2)
             )
             self.row_num += 1
-            print(self.rows)
         self.preview.webView.setHtml(
             self.template.format(
+                _date[0],
+                _date[1],
                 self.rows
             )
         )

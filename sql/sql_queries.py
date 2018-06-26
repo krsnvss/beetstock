@@ -670,7 +670,7 @@ def get_daily_totals(_date):
         sup_totals = []
         _query = QSqlQuery('''
         SELECT
-        suppliers.name,
+        suppliers.full_name,
         COUNT(trips.id),
         SUM(trips.net_weight),
         SUM(trips.clear_weight)

@@ -557,12 +557,6 @@ QTabBar::tab:right:!selected{
               <property name="text">
                <string/>
               </property>
-              <property name="pixmap">
-               <pixmap>../res/plot_count.png</pixmap>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
              </widget>
             </item>
            </layout>
@@ -581,7 +575,7 @@ QTabBar::tab:right:!selected{
                <pixmap>../res/plot_sum.png</pixmap>
               </property>
               <property name="scaledContents">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -907,7 +901,7 @@ QTabBar::tab:right:!selected{
      <x>0</x>
      <y>0</y>
      <width>1392</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
   </widget>

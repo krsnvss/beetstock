@@ -10,7 +10,8 @@ from time import sleep
 def random_dt():
     year = datetime.now().year
     month = datetime.now().month
-    day = datetime.now().day
+    # day = datetime.now().day
+    day = 24
     hour = randint(0, 23)
     minute = randint(0, 59)
     second = randint(0, 59)
@@ -111,6 +112,6 @@ def fill_with_inline():
 c = 0
 for x in range(100):
     fill_with_completed()
-    sleep(5)
+    # sleep(5)
     c += 1
     print(c, " records inserted")
