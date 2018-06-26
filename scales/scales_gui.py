@@ -104,7 +104,10 @@ class Scales(QtWidgets.QWidget):
 
     # Отправить сообщение в лабораторию
     def send_to_lab(self):
-        if get_sample_id(self.trip_state[0]) > 0:
+        self.sample_id = get_sample_id(self.trip_state[0])
+        if self.sample_id > 0:
+            set_sample_dt(self.sample_id,
+                          datetime.now())
             print("Quick! Do something! Make this manipulator move! This is sample", self.trip_state[0])
         else:
             print("Nothing to do. It's", self.trip_state[0])

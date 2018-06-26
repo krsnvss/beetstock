@@ -59,11 +59,12 @@ class DocPrinter(QtWidgets.QWidget):
             else:
                 self.row_template = self.odd_row_template
             self.rows += self.row_template.format(
+                item[2],
+                item[3],
+                round(item[4], 2),
+                round(item[5], 2),
                 item[0],
-                item[1],
-                round(item[2], 2),
-                round(item[3], 2),
-                round((1-(item[3] / item[2]))*100, 2)
+                item[1]
             )
             self.row_num += 1
         self.preview.webView.setHtml(

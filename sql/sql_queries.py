@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # SQL запросы используемые в интерфейсе оператора
 from PyQt5.QtSql import QSqlQuery
-
+from statistics import median
 
 # Данные о рейсе для форм редактирования
 def get_data(record_id):
@@ -513,6 +513,21 @@ def get_lab_line(ordinal, supplier, loadpoint, dt_start, dt_end):
 # Поставить номер пробы
 def create_sample():
     insert_query = QSqlQuery('''INSERT INTO samples (refuse) values (0)''')
+    return True
+
+
+# Поставить дату пробы
+def set_sample_dt(sample_id, dt):
+    _query = QSqlQuery('''
+    UPDATE samples 
+    SET sample_dt = '{}'
+    WHERE id = {}
+    '''.format(
+        dt,
+        sample_id
+    )
+    )
+    return True
 
 
 # Получить номер последней пробы
@@ -648,6 +663,24 @@ def add_photo(url):
     return last_photo
 
 
+# Рассчитать зачетный вес
+def set_clear_weight(_date, supplier, refuse):
+    _query = QSqlQuery('''
+    update trips
+    set clear_weight = net_weight * (100 - {})/100
+    WHERE
+    tare_dt BETWEEN '{}' AND '{}'
+    AND supplier = {}
+    '''.format(
+        refuse,
+        _date[0],
+        _date[1],
+        supplier
+    )
+    )
+    return True
+
+
 # Получить данные по хозяйствам для отчета
 def get_daily_totals(_date):
     sup_query = QSqlQuery('''
@@ -668,6 +701,39 @@ def get_daily_totals(_date):
     _totals = []
     for item in _suppliers:
         sup_totals = []
+        samples = []
+        _query = QSqlQuery('''
+                        SELECT sample
+                        FROM trips
+                        WHERE tare_dt BETWEEN '{}' AND '{}'
+                        AND supplier = {} AND sample > 0
+                        '''.format(
+            _date[0],
+            _date[1],
+            item
+        )
+        )
+        while _query.next():
+            samples.append(_query.value(0))
+        refuse = []
+        polarisation = []
+        for sample in samples:
+            samples_query = QSqlQuery('''
+                            select refuse, polarisation
+                            from samples
+                            where id = {}'''.format(
+                sample
+            ))
+            while samples_query.next():
+                refuse.append(samples_query.value(0))
+                polarisation.append(samples_query.value(1))
+        refuse_value = median(refuse)
+        polarisation_value = median(polarisation)
+        sup_totals.append(refuse_value)
+        sup_totals.append(polarisation_value)
+        _totals.append(sup_totals)
+        # Перезаписать значения в БД
+        set_clear_weight(_date, item, refuse_value)
         _query = QSqlQuery('''
         SELECT
         suppliers.full_name,
@@ -692,5 +758,4 @@ def get_daily_totals(_date):
             sup_totals.append(_query.value(1))
             sup_totals.append(_query.value(2))
             sup_totals.append(_query.value(3))
-        _totals.append(sup_totals)
     return _totals
